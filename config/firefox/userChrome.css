@@ -5,7 +5,7 @@
 	--button-border-radius: 0 !important; /* Disable border radius for a bunch of elements */
 	/* try increasing if you encounter problems */
 	--urlbar-height-setting: 22px;
-	--tab-min-height: 26px !important;
+	--tab-min-height: 20px !important;
 	--tab-block-margin: 0px !important;
 
 	/* I don't recommend you touch this unless you know what you're doing */
