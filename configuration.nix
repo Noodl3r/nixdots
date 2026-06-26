@@ -35,6 +35,7 @@
     users.users.noodl3 = {
         isNormalUser = true;
         extraGroups = [ "wheel" "networkmanager" "video" "audio" "input" "storage" "disk" ]; 
+        shell = pkgs.fish;
         packages = with pkgs; [
             tree
         ];
@@ -45,16 +46,17 @@
 
     environment.systemPackages = with pkgs; [
         vim
-            wget
-            git 
-            helix
-            kitty
-            picom
-            feh
-            brightnessctl
-            tlp
-            unclutter
-            tmux
+        wget
+        git 
+        helix
+        kitty
+        picom
+        feh
+        brightnessctl
+        tlp
+        unclutter
+        tmux
+        fish
     ];
 
     fonts.packages = with pkgs; [
