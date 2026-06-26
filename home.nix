@@ -39,5 +39,6 @@
 	home.file.".config/kitty".source = ./config/kitty;
 	home.file.".config/picom".source = ./config/picom;
     home.file.".config/tmux".source  = ./config/tmux;
+    home.file.".config/fish".source  = ./config/fish;
 	home.file.".vimrc".source        = ./config/vim/vimrc;
 }
