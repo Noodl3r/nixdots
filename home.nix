@@ -21,9 +21,11 @@
 		enable = true;
 		profiles.default = {
 			settings = {"toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-	};
+	    };
 	userChrome = builtins.readFile ./config/firefox/userChrome.css;
 	home.file.".config/i3".source = ./config/i3;
 	home.file.".config/kitty".source = ./config/kitty;
 	home.file.".config/picom".source = ./config/picom;
+	  };
+  };
 }
