@@ -1,0 +1,23 @@
+{ config, pkgs, ...}:
+
+{
+	home.username = "noodl3";
+	home.homeDirectory = "/home/noodl3";
+	home.stateVersion ="25.05";
+	programs.bash = {
+		enable = true;
+		shellAliases = {
+			btw = "echo I use nixos btw";
+			v = "vim";
+			rebuild ="sudo nixos-rebuild switch --flake ~/nixos-dotfiles#multivac";
+		};
+	};
+	programs.git = {
+		enable = true;
+		userName = "Noodl3r";
+		userEmail = "echelon.r6s@gmail.com";
+	};
+	home.file.".config/i3".source = ./config/i3;
+	home.file.".config/kitty".source = ./config/kitty;
+	home.file.".config/picom".source = ./config/picom;
+}

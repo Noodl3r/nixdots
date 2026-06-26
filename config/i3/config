@@ -1,0 +1,179 @@
+set $mod Mod4
+set $term kitty
+font pango:JetBrainsMono 10
+
+#i3 autostart
+exec --no-startup-id dex --autostart --environment i3
+
+#Lock
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -c 000000
+
+#Network manager
+exec --no-startup-id nm-applet
+
+#Use brightnessctl to adjust brightness :
+bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+# Use pactl to adjust volume in PulseAudio.
+set $refresh_i3status killall -SIGUSR1 i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+floating_modifier $mod
+tiling_drag modifier titlebar
+
+bindsym $mod+Return exec $term
+bindsym $mod+q kill
+bindsym $mod+w exec "flatpak run org.mozilla.firefox"
+bindsym $mod+Shift+Return exec i3lock -c 000000
+bindsym $mod+d exec "rofi -modi drun,run -show drun"
+#bindsym $mod+e exec --no-startup-id ~/bin/ts
+bindsym $mod+e exec --no-startup-id kitty -e bash -lc "$HOME/bin/ts"
+
+# Customize Yazi's floating window
+for_window [title="^yazi$"] floating enable, border pixel 2, resize set 800 600, move position center
+
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+g split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# Back and Fourth
+workspace_auto_back_and_forth yes
+# Auto Starting Applications :
+# exec --no-startup-id flatpak run com.spotify.Client
+exec --no-startup-id kitty -e bash -lc "$HOME/bin/ts"
+exec --no-startup-id tmux new-session -d
+# Assigning startup applications
+for_window [class="steam"] move container to workspace $ws8
+for_window [class="Steam"] floating enable
+for_window [class="discord"] move container to workspace $ws8
+for_window [class="Spotify"] move container to workspace $ws10
+
+# switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+r restart
+
+# resize window
+bindsym $mod+r mode "resize"
+mode "resize" {
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym j resize shrink height 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+gaps top 20
+bindsym $mod+Shift+z          gaps inner all set 0; gaps outer all set 0;  gaps top all set 20
+bindsym $mod+z     gaps inner all set 10; gaps outer all set 0; gaps top all set 20
+
+#POLYBAR
+#exec ~/.config/polybar/launch &
+
+exec --no-startup-id setxkbmap -option caps:escape
+exec --no-startup-id xrandr --output eDP --set TearFree on
+
+# WALL PAPER
+exec  --no-startup-id wal -R
+exec  --no-startup-id nohup picom &
+exec  --no-startup-id amixer -q set Master 20% mute
+# exec --no-startup-id inkscape-figures watch
+
+# SCREENSHOTS :
+bindsym $mod+Shift+s exec "flameshot gui -c -p $HOME/Pictures/Screenshots"
+bindsym $mod+Shift+v exec "~/bin/record-toggle.sh"
+
+#Layout script
+exec_always --no-startup-id ~/.config/i3-alternating-layout/alternating_layouts.py %
+
+#Hiding window title bar
+for_window [class="."] border none
+
+#Unclutter
+exec --no-startup-id unclutter -idle 0.5 -root
+
+bar {
+ status_command i3status
+}
+
+
