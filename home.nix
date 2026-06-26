@@ -21,12 +21,12 @@
 		enable = true;
 		configPath = ".mozilla/firefox";
 		profiles.default = {
-			extensions = with pkgs.firefox-addons; [
-			ublock-origin
-			bitwarden
-			vimium
-			darkreader
-			];
+			#extensions = with pkgs.firefox-addons; [
+			#ublock-origin
+			#bitwarden
+			#vimium
+			#darkreader
+			#];
 			settings = {
 				"toolkit.legacyUserProfileCustomizations.stylesheets" = true;
 				"browser.compactmode.show" = true;
@@ -38,4 +38,5 @@
 	home.file.".config/i3".source = ./config/i3;
 	home.file.".config/kitty".source = ./config/kitty;
 	home.file.".config/picom".source = ./config/picom;
+	home.file.".vimrc".source = .config/vim;
 }

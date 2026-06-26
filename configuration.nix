@@ -22,6 +22,15 @@
 	autoRepeatInterval = 35;
 	windowManager.i3.enable = true;
   };
+  services.tlp = {
+	enable = true;
+	settings = {
+		CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+		CPU_SCALING_GOVERNOR_ON_AC = "powersave";
+		CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+		CPU_MAX_PERF_ON_BAT = 80;
+	};
+  };
 
   users.users.noodl3 = {
     isNormalUser = true;
@@ -45,12 +54,16 @@
     brightnessctl
     tlp
     unclutter
+    tmux
   ];
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
   ];
 
+  hardware = {
+	bluetooth.enable = true;
+  };
   nix.settings.experimental-features = [ "nix-command" "flakes"];
   system.stateVersion = "26.05"; 
 }
