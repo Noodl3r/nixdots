@@ -19,7 +19,7 @@
 	};
 	programs.firefox = {
 		enable = true;
-		configPath = "${config.xdg.configHome}/mozilla/firefox";
+		configPath = ".mozilla/firefox";
 		profiles.default = {
 			settings = {
 				"toolkit.legacyUserProfileCustomizations.stylesheets" = true;
