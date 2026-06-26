@@ -20,13 +20,20 @@
 	programs.firefox = {
 		enable = true;
 		configPath = ".mozilla/firefox";
-		profiles.default = {
-			settings = {
-				"toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-				"browser.compactmode.show" = true;
-	    		};
-		userChrome = builtins.readFile ./config/firefox/userChrome.css;
-		};
+		profiles = {
+			myprofile.extensions = with pkgs.nur.repos.rycee.firefox-addor; [
+			ublock-origin
+			bitwarden
+			vimium
+			darkreader
+			]
+			default = {
+				settings = {
+					"toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+					"browser.compactmode.show" = true;
+				};
+			userChrome = builtins.readFile ./config/firefox/userChrome.css;
+			};
 	};
 
 	home.file.".config/i3".source = ./config/i3;
