@@ -170,7 +170,7 @@ exec_always --no-startup-id ~/.config/i3-alternating-layout/alternating_layouts.
 for_window [class="."] border none
 
 #Unclutter
-exec --no-startup-id unclutter -idle 0.5 -root
+exec --no-startup-id unclutter -idle 1 -root
 
 bar {
  status_command i3status
