@@ -21,7 +21,7 @@
 		enable = true;
 		configPath = ".mozilla/firefox";
 		profiles.default = {
-			extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+			extensions = with pkgs.firefox-addons; [
 			ublock-origin
 			bitwarden
 			vimium

@@ -43,6 +43,8 @@
     picom
     feh
     brightnessctl
+    tlp
+    unclutter
   ];
 
   fonts.packages = with pkgs; [
