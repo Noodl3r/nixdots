@@ -4,7 +4,7 @@
 	home.username = "noodl3";
 	home.homeDirectory = "/home/noodl3";
 	home.stateVersion ="25.05";
-	};
+
 	programs.fish = {
 		enable = true;
 		shellAliases = {
@@ -12,6 +12,7 @@
 			v = "vim";
 			rebuild ="sudo nixos-rebuild switch --flake ~/nixos-dotfiles#multivac";
 		};
+	};
 	programs.git = {
 		enable = true;
 		settings.user.name  = "Noodl3r";
