@@ -38,5 +38,5 @@
 	home.file.".config/i3".source = ./config/i3;
 	home.file.".config/kitty".source = ./config/kitty;
 	home.file.".config/picom".source = ./config/picom;
-	home.file.".vimrc".source = ./config/vim;
+	home.file.".vimrc".source = ./config/vim/vimrc;
 }

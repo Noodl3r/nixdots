@@ -17,11 +17,11 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
-set scrollof = 5
-set backsapce=indent,eol,start
+set scrolloff=5
+set backspace=indent,eol,start
 
 set hidden
-set nobackp
+set nobackup
 set nowritebackup
 set noswapfile
 
