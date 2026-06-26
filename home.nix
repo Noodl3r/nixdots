@@ -14,8 +14,8 @@
 	};
 	programs.git = {
 		enable = true;
-		userName = "Noodl3r";
-		userEmail = "echelon.r6s@gmail.com";
+		settings.user.name  = "Noodl3r";
+		settings.user.email = "echelon.r6s@gmail.com";
 	};
 	home.file.".config/i3".source = ./config/i3;
 	home.file.".config/kitty".source = ./config/kitty;
