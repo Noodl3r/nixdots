@@ -42,6 +42,7 @@
     kitty
     picom
     feh
+    brightnessctl
   ];
 
   fonts.packages = with pkgs; [
