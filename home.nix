@@ -4,7 +4,7 @@
 	home.username = "noodl3";
 	home.homeDirectory = "/home/noodl3";
 	home.stateVersion ="25.05";
-	programs.bash = {
+	programs.fish = {
 		enable = true;
 		shellAliases = {
 			btw = "echo I use nixos btw";
