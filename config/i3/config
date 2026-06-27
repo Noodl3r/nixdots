@@ -143,7 +143,7 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
-gaps top 8
+# gaps top 8
 #bindsym $mod+Shift+z          gaps inner all set 0; gaps outer all set 0;  gaps top all set 20
 #bindsym $mod+z     gaps inner all set 10; gaps outer all set 0; gaps top all set 20
 

@@ -26,6 +26,13 @@
 
 /* --- GENERAL DEBLOAT ---------------------------------- */
 
+/* FUCK Bookmarks */
+#PersonalToolbar {
+    display: none !important;
+}
+#history-panelmenu {
+    display : none !important; 
+}
 /* Bottom left page loading status or url preview */
 #statuspanel { display: none !important; }
 
