@@ -46,6 +46,7 @@
     environment.systemPackages = with pkgs; [
         vim-full
         xclip
+        curl
         wget
         git 
         helix
@@ -53,10 +54,25 @@
         picom
         feh
         brightnessctl
-        tlp
         unclutter
         tmux
         fish
+        fzf
+        xss-lock
+        dmenu
+        ripgrep
+        bat
+        zip
+        unzip
+        #dev
+        gcc
+        gdb
+        clang
+        valgrind
+        cmake
+        gnumake
+        pkg-config
+        flameshot
     ];
 
     fonts.packages = with pkgs; [

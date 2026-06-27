@@ -157,6 +157,8 @@ exec --no-startup-id xrandr --output eDP --set TearFree on
 exec  --no-startup-id wal -R
 exec  --no-startup-id nohup picom &
 exec  --no-startup-id amixer -q set Master 20% mute
+exec_always --no-startup-id feh --bg-scale ~/Pictures/street.jpg
+
 # exec --no-startup-id inkscape-figures watch
 
 # SCREENSHOTS :
