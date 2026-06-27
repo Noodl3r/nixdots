@@ -5,9 +5,6 @@ font pango:JetBrainsMono 10
 #i3 autostart
 exec --no-startup-id dex --autostart --environment i3
 
-#Lock
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -c 000000
-
 #Network manager
 exec --no-startup-id nm-applet
 

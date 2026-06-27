@@ -22,6 +22,12 @@
         autoRepeatInterval = 35;
         windowManager.i3.enable = true;
     };
+
+    services.screen-locker = {
+      enable = true;
+      lockCmd = "i3lock -c 000000";
+    };
+
     services.tlp = {
         enable = true;
         settings = {
@@ -58,7 +64,6 @@
         tmux
         fish
         fzf
-        xss-lock
         dmenu
         ripgrep
         bat
