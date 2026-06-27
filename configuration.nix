@@ -35,7 +35,6 @@
     users.users.noodl3 = {
         isNormalUser = true;
         extraGroups = [ "wheel" "networkmanager" "video" "audio" "input" "storage" "disk" ]; 
-        shell = pkgs.fish;
         packages = with pkgs; [
             tree
         ];
@@ -46,7 +45,8 @@
 # programs.hyprland.enable = true;
 
     environment.systemPackages = with pkgs; [
-        vim
+        vim-full
+        xclip
         wget
         git 
         helix
