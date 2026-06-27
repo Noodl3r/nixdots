@@ -74,6 +74,7 @@
         pkg-config
         flameshot
         impala
+        lazygit
     ];
 
     fonts.packages = with pkgs; [
