@@ -49,7 +49,7 @@
         xclip
         curl
         wget
-        git 
+        git lazygit gh
         helix
         kitty
         picom
@@ -62,19 +62,15 @@
         dmenu
         ripgrep
         bat
-        zip
-        unzip
-        #dev
-        gcc
-        gdb
-        clang
-        valgrind
-        cmake
-        gnumake
-        pkg-config
+        zip unzip xz p7zip
+        #dev 
+        gcc gdb clang clang-tools valgrind cmake gnumake pkg-config lld ninja
+        # languages
+        python3 
+        rustc cargo rust-analyzer rustfmt clippy
+        nodejs 
+        # utilities
         flameshot
-        impala
-        lazygit
     ];
 
     fonts.packages = with pkgs; [
