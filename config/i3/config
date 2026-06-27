@@ -143,9 +143,9 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
-gaps top 20
-bindsym $mod+Shift+z          gaps inner all set 0; gaps outer all set 0;  gaps top all set 20
-bindsym $mod+z     gaps inner all set 10; gaps outer all set 0; gaps top all set 20
+gaps top 8
+#bindsym $mod+Shift+z          gaps inner all set 0; gaps outer all set 0;  gaps top all set 20
+#bindsym $mod+z     gaps inner all set 10; gaps outer all set 0; gaps top all set 20
 
 #POLYBAR
 #exec ~/.config/polybar/launch &
@@ -174,6 +174,7 @@ exec --no-startup-id unclutter -idle 1 -root
 
 bar {
  status_command i3status
+ font pango:JetBrainsMono 10
  position top
 }
 
