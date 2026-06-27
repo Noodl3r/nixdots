@@ -23,6 +23,13 @@
     settings.user.email = "echelon.r6s@gmail.com";
   };
 
+  services.screen-locker = {
+    enable = true;
+    lockCmd = "${pkgs.i3lock}/bin/i3lock -n -c 000000";
+    inactiveInterval = 10;
+    xautolock.enable = true;
+  };
+
   programs.firefox = {
     enable = true;
     configPath = ".mozilla/firefox";
