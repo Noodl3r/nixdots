@@ -73,6 +73,7 @@
         gnumake
         pkg-config
         flameshot
+        impala
     ];
 
     fonts.packages = with pkgs; [
@@ -82,6 +83,12 @@
     hardware = {
         bluetooth.enable = true;
     };
-    nix.settings.experimental-features = [ "nix-command" "flakes"];
+    nix.settings = {
+      experimental-features = [ "nix-command" "flakes"];
+      auto-optimise-store = true;
+      keep-outputs = true;
+      keep-derivations = true;
+    };
+
     system.stateVersion = "26.05"; 
 }
