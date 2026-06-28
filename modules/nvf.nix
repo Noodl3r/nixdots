@@ -9,7 +9,12 @@
       viAlias = true;
       vimAlias = false;
       autopairs.nvim-autopairs.enable = true;
-      opts.expandtab = true;
+      opts = {
+        expandTab = true;
+        tabstop = 4;
+        shiftwidth = 4;
+        signcolumn = "no";
+      };
       theme = {
         enable = true;
         name = "oxocarbon";
@@ -25,13 +30,21 @@
         lspkind.enable = true;
         trouble.enable = true;
         otter-nvim.enable = true;
-      };
-      debugger = {
-        nvim-dap = {
-          enable = true;
-          ui.enable = true;
+        mappings = {
+          codeAction = "<leader>ca";
+          goToDeclaration = "<leader>gD";
+          goToDefinition = "<leader>gd";
+          goToType = "<leader>gt";
+          nextDiagnostic = "<leader>n";
+          previousDiagnostic = "<leader>N";
         };
       };
+      #debugger = {
+      #nvim-dap = {
+      #enable = true;
+      #ui.enable = true;
+      #};
+      #};
       languages = {
         enableFormat = true;
         enableTreesitter = true;
@@ -55,9 +68,13 @@
       autocomplete = {
         blink-cmp.enable = true;
       };
-      fzf-lua = {
+      telescope = {
         enable = true;
-        profile = "borderless-full";
+        mappings = {
+          gitFiles = "<leader>ff";
+          liveGrep = "<leader>fg";
+          findProjects = "<leader>fd";
+        };
       };
       utility = {
         oil-nvim.enable = true;
