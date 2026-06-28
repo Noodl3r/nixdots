@@ -54,6 +54,7 @@
   programs.firefox.enable = true;
   programs.fish.enable = true;
 
+  nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     vim-full
     helix
@@ -70,6 +71,7 @@
     pulseaudio
     unclutter
     tmux
+    i3-auto-layout
     fish
     fzf
     dmenu
@@ -100,6 +102,11 @@
     nodejs
     # utilities
     flameshot
+    zathura
+
+    #Unfree trash
+    discord
+    spotify
   ];
 
   fonts.packages = with pkgs; [
