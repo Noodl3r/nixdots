@@ -70,7 +70,6 @@
     brightnessctl
     pulseaudio
     unclutter
-    tmux
     i3-auto-layout
     fish
     fzf

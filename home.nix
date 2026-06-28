@@ -65,6 +65,5 @@
   home.file.".config/i3status".source = ./config/i3status;
   home.file.".config/kitty".source = ./config/kitty;
   home.file.".config/picom".source = ./config/picom;
-  home.file.".config/tmux".source = ./config/tmux;
   home.file.".vimrc".source = ./config/vim/vimrc;
 }

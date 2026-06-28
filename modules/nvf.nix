@@ -20,8 +20,8 @@
       };
       theme = {
         enable = true;
-        name = "oxocarbon";
-        style = "dark";
+        name = "github";
+        style = "dark_high_contrast";
         transparent = false;
       };
       spellcheck = {
