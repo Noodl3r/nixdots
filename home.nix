@@ -12,7 +12,7 @@
     '';
     shellAliases = {
       btw = "echo I use nixos btw";
-      v = "vim";
+      v = "nvim";
       rebuild = "sudo nixos-rebuild switch --flake ~/nixos-dotfiles#multivac --no-reexec";
       check = "nix flake check ~/nixos-dotfiles";
     };

@@ -1,20 +1,23 @@
-{ ... }:
-
-{
+{...}: {
   programs.nvf = {
     enable = true;
     # Your settings need to go into the settings attribute set
     # most settings are documented in the appendix
     settings.vim = {
+      globals.mapleader = " ";
       lineNumberMode = "relNumber";
       viAlias = true;
       vimAlias = false;
       autopairs.nvim-autopairs.enable = true;
+      opts.expandtab = true;
       theme = {
         enable = true;
         name = "oxocarbon";
         style = "dark";
         transparent = false;
+      };
+      spellcheck = {
+        enable = true;
       };
       lsp = {
         enable = true;
@@ -26,7 +29,7 @@
       debugger = {
         nvim-dap = {
           enable = true;
-          ui.enable  = true;
+          ui.enable = true;
         };
       };
       languages = {
@@ -44,6 +47,11 @@
         docker.enable = true;
         lua.enable = true;
       };
+      diagnostics = {
+        enable = true;
+        nvim-lint.enable = true;
+        config.virtual_text = true;
+      };
       autocomplete = {
         blink-cmp.enable = true;
       };
@@ -51,8 +59,20 @@
         enable = true;
         profile = "borderless-full";
       };
-      utility.oil-nvim = {
-        enable = true;
-        gitStatus.enable = true;
+      utility = {
+        oil-nvim.enable = true;
+        oil-nvim.gitStatus.enable = true;
+        diffview-nvim.enable = true;
+      };
+      terminal = {
+        toggleterm = {
+          enable = true;
+          lazygit.enable = true;
+        };
+      };
+      binds = {
+        whichKey.enable = true;
+      };
     };
+  };
 }
