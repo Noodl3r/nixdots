@@ -7,8 +7,8 @@ STATE=$(pactl get-source-mute "$SOURCE" | awk '{print $2}')
 
 if [ "$STATE" = "yes" ]; then
     pactl set-source-mute "$SOURCE" 0
-    brightnessctl -d "$LED" set 0
+    brightnessctl -d "$LED" set 1
 else
     pactl set-source-mute "$SOURCE" 1
-    brightnessctl -d "$LED" set 1
+    brightnessctl -d "$LED" set 0
 fi

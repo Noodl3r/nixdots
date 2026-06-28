@@ -10,7 +10,8 @@
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
-      set fish_greeting #Disable greeting;
+      set fish_greeting
+      fish_add_path ~/.local/bin
     '';
     shellAliases = {
       btw = "echo I use nixos btw";
