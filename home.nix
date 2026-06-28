@@ -42,6 +42,7 @@
     };
   };
 
+
   home.file.".config/i3".source       = ./config/i3;
   home.file.".config/i3status".source = ./config/i3status;
   home.file.".config/kitty".source    = ./config/kitty;
