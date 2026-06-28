@@ -5,7 +5,7 @@
     # Your settings need to go into the settings attribute set
     # most settings are documented in the appendix
     settings.vim = {
-      keymaps = import ./kemaps.nix;
+      keymaps = import ./keymaps.nix;
       globals.mapleader = " ";
       lineNumberMode = "relNumber";
       viAlias = true;
@@ -39,7 +39,14 @@
           goToType = "<leader>gt";
           nextDiagnostic = "<leader>n";
           previousDiagnostic = "<leader>N";
+          renameSymbol = "<leader>gr";
         };
+      };
+      treesitter = {
+        enable = true;
+        context.enable = true;
+        highlight.enable = true;
+        indent.enable = true;
       };
       #debugger = {
       #nvim-dap = {

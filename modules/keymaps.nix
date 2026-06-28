@@ -14,7 +14,7 @@
   }
 
   {
-    key = "<leader>TAB";
+    key = "<leader><Tab>";
     mode = "n";
     silent = true;
     action = ":Oil";
@@ -26,6 +26,7 @@
     silent = true;
     action = "\"+y";
   }
+
   {
     key = "<Up>";
     mode = "i";
@@ -39,10 +40,11 @@
     silent = true;
     action = "<C-o>gj";
   }
+
   {
     key = "<leader>s";
     mode = "n";
     silent = true;
-    action = ":%s///g<Left><Left>";
+    action = ":%s/\\<<C-r><C-w>\\>//g<Left><Left>";
   }
 ]
