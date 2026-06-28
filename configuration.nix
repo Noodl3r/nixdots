@@ -100,6 +100,7 @@
     rustfmt
     clippy
     nodejs
+    typst
     # utilities
     flameshot
     zathura
@@ -107,6 +108,7 @@
     #Unfree trash
     discord
     spotify
+    fd
   ];
 
   fonts.packages = with pkgs; [

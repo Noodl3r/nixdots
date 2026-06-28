@@ -1,0 +1,111 @@
+#!/usr/bin/env bash
+
+DEV_DIR="${DEV_DIR:-$HOME/dev}"
+ 
+switch_to() {
+    if [[ -z $TMUX ]]; then
+        tmux attach-session -t "=$1"
+    else
+        tmux switch-client -t "=$1"
+    fi
+}
+
+has_session() {
+    tmux has-session -t "=$1" 2> /dev/null  # = forces exact match
+}
+
+hydrate() {
+    if [ -f $2/.tmux-sessionizer ]; then
+        tmux send-keys -t $1 "source $2/.tmux-sessionizer" Enter
+    elif [ -f $HOME/.tmux-sessionizer ]; then
+        tmux send-keys -t $1 "source $HOME/.tmux-sessionizer" Enter
+    fi
+}
+
+if command -v fd &>/dev/null; then
+    FD=fd
+elif command -v fdfind &>/dev/null; then
+    FD=fdfind
+else
+    echo "tmux-sessionizer: fd/fdfind not found" >&2
+    exit 1
+fi
+
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    selected=(
+        $($FD --max-depth 1 --type d . \
+            "$HOME/dev" \
+            "$HOME/work" \
+            #"$HOME/school/compSciProjects"\
+            2>/dev/null)
+    )
+    #selected=$(printf '%s\n' "${selected[@]}" | fzf --border --print-query)
+    selected=$(printf '%s\n' "${selected[@]}" | fzf \
+        --border \
+        --print-query \
+        --delimiter="/home/noodl3/" \
+        --with-nth=2..)
+    #
+    selected=$(echo "$selected" | tail -1)
+fi
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+if [[ ! -d $selected ]]; then
+    # Check if the input is a GitHub URL
+    if [[ $selected == https://github.com/* || $selected == git@github.com:* || $selected == *git@codeberg.org* ]]; then
+        # It's a GitHub URL, extract the repo name from the URL
+        repo_name=$(basename "$selected" .git)
+        echo "Cloning Remote repo '$repo_name' to '${DEV_DIR}/$repo_name'."
+        read -p "Enter new directory name or press enter to use '$repo_name': " custom_name
+
+        if [[ -n $custom_name ]]; then
+            target_dir="${DEV_DIR}/$custom_name"
+        else
+            target_dir="${DEV_DIR}/$repo_name"
+        fi
+
+        git clone "$selected" "$target_dir"
+        if [[ $? -eq 0 ]]; then
+            echo "Repository cloned successfully to $target_dir"
+            selected="$target_dir"
+        else
+            echo "Failed to clone repository"
+            exit 1
+        fi
+    else
+        # It's a directory path, offer to create it
+        read -p "Directory '${DEV_DIR}/$selected' doesn't exist. Create it? (y/n) " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            mkdir -p "${DEV_DIR}/$selected"
+            selected="${DEV_DIR}/$selected"
+        else
+            # User declined to create directory - start session with that name in home dir
+            selected_name=$(basename "$selected" | tr . _)
+            selected="$HOME"
+        fi
+    fi
+fi
+
+selected_name=${selected_name:-$(basename "$selected" | tr . _)}
+tmux_running=$(pgrep tmux)
+
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+    tmux new-session -s $selected_name -c $selected
+    hydrate $selected_name $selected
+    exit 0
+fi
+
+if ! has_session $selected_name; then
+    tmux new-session -ds $selected_name -c $selected
+    hydrate $selected_name $selected
+fi
+
+switch_to $selected_name
+exit 0
+

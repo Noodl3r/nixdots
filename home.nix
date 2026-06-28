@@ -18,6 +18,7 @@
       v = "nvim";
       rebuild = "sudo nixos-rebuild switch --flake ~/nixos-dotfiles#multivac --no-reexec";
       check = "nix flake check ~/nixos-dotfiles";
+      lg = "lazygit";
     };
   };
   programs.git = {
@@ -30,6 +31,21 @@
     lockCmd = "${pkgs.i3lock}/bin/i3lock -n -c 000000";
     inactiveInterval = 10;
     xautolock.enable = true;
+  };
+  programs.tmux = {
+    enable = true;
+    clock24 = true;
+    keyMode = "vi";
+    terminal = "tmux-256color";
+    shortcut = "a";
+    plugins = with pkgs.tmuxPlugins; [
+      sensible
+      vim-tmux-navigator
+      resurrect
+    ];
+    extraConfig = ''
+      set -g mouse on
+    '';
   };
 
   programs.firefox = {

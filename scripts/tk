@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+while true; do
+    selected=$(tmux list-sessions -F "#{session_name}" | fzf --prompt="Kill > ")
+
+    # exit if nothing selected (ESC / Ctrl-C / empty)
+    if [[ -z $selected ]]; then
+        exit 0
+    fi
+
+    tmux kill-session -t "$selected"
+done

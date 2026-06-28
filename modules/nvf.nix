@@ -16,6 +16,7 @@
         tabstop = 4;
         shiftwidth = 4;
         signcolumn = "no";
+        scrolloff = 6;
       };
       theme = {
         enable = true;
