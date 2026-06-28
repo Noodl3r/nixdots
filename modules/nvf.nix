@@ -1,9 +1,11 @@
+# https://nvf.notashelf.dev/
 {...}: {
   programs.nvf = {
     enable = true;
     # Your settings need to go into the settings attribute set
     # most settings are documented in the appendix
     settings.vim = {
+      keymaps = import ./kemaps.nix;
       globals.mapleader = " ";
       lineNumberMode = "relNumber";
       viAlias = true;
@@ -59,6 +61,7 @@
         rust.enable = true;
         docker.enable = true;
         lua.enable = true;
+        typst.enable = true;
       };
       diagnostics = {
         enable = true;
@@ -80,6 +83,11 @@
         oil-nvim.enable = true;
         oil-nvim.gitStatus.enable = true;
         diffview-nvim.enable = true;
+        surround.enable = true;
+      };
+      ui = {
+        borders.enable = true;
+        colorizer.enable = true;
       };
       terminal = {
         toggleterm = {
@@ -87,8 +95,10 @@
           lazygit.enable = true;
         };
       };
-      binds = {
-        whichKey.enable = true;
+      git = {
+        enable = true;
+        gitsigns.enable = true;
+        gitsigns.codeActions.enable = false;
       };
     };
   };
