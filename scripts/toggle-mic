@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+SOURCE="@DEFAULT_SOURCE@"
+LED="platform::micmute"
+
+STATE=$(pactl get-source-mute "$SOURCE" | awk '{print $2}')
+
+if [ "$STATE" = "yes" ]; then
+    pactl set-source-mute "$SOURCE" 0
+    brightnessctl -d "$LED" set 0
+else
+    pactl set-source-mute "$SOURCE" 1
+    brightnessctl -d "$LED" set 1
+fi

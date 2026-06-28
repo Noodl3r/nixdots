@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+SINK="@DEFAULT_SINK@"
+LED="platform::mute"
+
+STATE=$(pactl get-sink-mute "$SINK" | awk '{print $2}')
+
+if [ "$STATE" = "yes" ]; then
+    pactl set-sink-mute "$SINK" 0
+    brightnessctl -d "$LED" set 0
+else
+    pactl set-sink-mute "$SINK" 1
+    brightnessctl -d "$LED" set 1
+fi
