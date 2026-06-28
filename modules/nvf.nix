@@ -10,7 +10,7 @@
       vimAlias = false;
       autopairs.nvim-autopairs.enable = true;
       opts = {
-        expandTab = true;
+        expandtab = true;
         tabstop = 4;
         shiftwidth = 4;
         signcolumn = "no";
