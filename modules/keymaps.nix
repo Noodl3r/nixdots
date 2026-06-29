@@ -73,14 +73,14 @@
     key = "n";
     mode = "n";
     silent = true;
-    action = "nzzv";
+    action = "nzz";
   }
 
   {
     key = "N";
     mode = "n";
     silent = true;
-    action = "Nzzv";
+    action = "Nzz";
   }
 
   {

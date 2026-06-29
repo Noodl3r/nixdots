@@ -20,8 +20,8 @@
       };
       theme = {
         enable = true;
-        name = "github";
-        style = "dark_high_contrast";
+        name = "tokyonight";
+        style = "night";
         transparent = false;
       };
       spellcheck = {
@@ -45,7 +45,7 @@
       };
       treesitter = {
         enable = true;
-        context.enable = true;
+        #context.enable = true;
         highlight.enable = true;
         indent.enable = true;
       };
