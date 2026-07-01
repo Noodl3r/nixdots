@@ -21,30 +21,46 @@
       lg = "lazygit";
     };
   };
+
   programs.git = {
     enable = true;
     settings.user.name = "Noodl3r";
     settings.user.email = "echelon.r6s@gmail.com";
   };
+
   services.screen-locker = {
     enable = true;
     lockCmd = "${pkgs.i3lock}/bin/i3lock -n -c 000000";
-    inactiveInterval = 10;
+    inactiveInterval = 5;
     xautolock.enable = true;
   };
+
   programs.tmux = {
     enable = true;
+    shell = "${pkgs.fish}/bin/fish";
     clock24 = true;
     keyMode = "vi";
     terminal = "tmux-256color";
     shortcut = "a";
+    baseIndex = 1;
+    mouse = true;
     plugins = with pkgs.tmuxPlugins; [
       sensible
       vim-tmux-navigator
       resurrect
     ];
+    # must be a better way to do this lol
     extraConfig = ''
-      set -g mouse on
+      set -g status-position top
+      set -g status on
+      set -g status-left ""
+      set -g status-right ""
+      set -g status-style bg=#1e1e2e,fg=#cdd6f4
+      set -g window-status-style fg=#6c7086,bg=#1e1e2e
+      set -g window-status-current-style fg=#89b4fa,bold,bg=#1e1e2e
+      set -g window-status-separator ""
+      set -g window-status-format " #I "
+      set -g window-status-current-format " #I "
     '';
   };
 

@@ -12,8 +12,14 @@
     };
   };
 
-  outputs = {self, nixpkgs, nvf, home-manager, ...}: {
-    nixosConfigurations.multivac = nixpkgs.lib.nixosSystem{
+  outputs = {
+    self,
+    nixpkgs,
+    nvf,
+    home-manager,
+    ...
+  }: {
+    nixosConfigurations.multivac = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       modules = [
         nvf.nixosModules.default
@@ -31,4 +37,3 @@
     };
   };
 }
-

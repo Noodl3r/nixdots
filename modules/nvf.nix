@@ -20,8 +20,8 @@
       };
       theme = {
         enable = true;
-        name = "tokyonight";
-        style = "night";
+        name = "github";
+        style = "dark_high_contrast";
         transparent = false;
       };
       spellcheck = {
@@ -47,7 +47,8 @@
         enable = true;
         #context.enable = true;
         highlight.enable = true;
-        indent.enable = true;
+        #indent.enable = true;
+        autotagHtml = true;
       };
       #debugger = {
       #nvim-dap = {
@@ -69,7 +70,12 @@
         rust.enable = true;
         docker.enable = true;
         lua.enable = true;
-        typst.enable = true;
+        typst = {
+          enable = true;
+          extensions.typst-preview-nvim.setupOpts = {
+            invert_colors = "auto";
+          };
+        };
       };
       diagnostics = {
         enable = true;
@@ -105,8 +111,6 @@
       };
       git = {
         enable = true;
-        gitsigns.enable = true;
-        gitsigns.codeActions.enable = false;
       };
     };
   };

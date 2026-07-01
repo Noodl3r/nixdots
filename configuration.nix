@@ -11,6 +11,7 @@
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.configurationLimit = 15;
 
   networking.hostName = "Multivac"; # Define your hostname.
   networking.networkmanager.enable = true;
@@ -58,9 +59,10 @@
   environment.systemPackages = with pkgs; [
     vim-full
     helix
-    xclip
+    #tmux
     curl
     wget
+    xclip
     git
     lazygit
     gh
