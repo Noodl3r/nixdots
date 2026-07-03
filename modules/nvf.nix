@@ -1,11 +1,14 @@
 # https://nvf.notashelf.dev/
-{...}: {
+{pkgs, ...}: {
   programs.nvf = {
     enable = true;
     # Your settings need to go into the settings attribute set
     # most settings are documented in the appendix
     settings.vim = {
       keymaps = import ./keymaps.nix;
+      luaConfigPre = ''
+        vim.opt.runtimepath:prepend("${./colors/oldschool}")
+      '';
       globals.mapleader = " ";
       lineNumberMode = "relNumber";
       viAlias = true;
@@ -18,11 +21,9 @@
         signcolumn = "no";
         scrolloff = 6;
       };
-      theme = {
-        enable = true;
-        name = "github";
-        style = "dark_high_contrast";
-        transparent = false;
+      visuals = {
+        rainbow-delimiters.enable = true;
+        indent-blankline.enable = true;
       };
       spellcheck = {
         enable = true;
@@ -112,6 +113,9 @@
       git = {
         enable = true;
       };
+      luaConfigPost = ''
+        vim.cmd.colorscheme("oldschool");
+      '';
     };
   };
 }
