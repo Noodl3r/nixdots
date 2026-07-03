@@ -46,6 +46,7 @@
 
   users.users.noodl3 = {
     isNormalUser = true;
+    shell = pkgs.fish;
     extraGroups = ["wheel" "networkmanager" "video" "audio" "input" "storage" "disk"];
     packages = with pkgs; [
       tree
@@ -105,6 +106,7 @@
     # utilities
     flameshot
     zathura
+    bunnyfetch
 
     #Unfree trash
     discord

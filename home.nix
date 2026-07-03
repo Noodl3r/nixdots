@@ -12,7 +12,13 @@
     interactiveShellInit = ''
       set fish_greeting
       fish_add_path ~/.local/bin
+      set -g fish_key_bindings fish_vi_key_bindings
+      set -f fish_cursor_default block blink
+      set -f fish_cursor_insert line blink
+      set -f fish_cursor_replace_one underscore blink
+      set -f fish_cursor_visual block
     '';
+
     shellAliases = {
       btw = "echo I use nixos btw";
       v = "nvim";
@@ -20,6 +26,12 @@
       check = "nix flake check ~/nixos-dotfiles";
       lg = "lazygit";
     };
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableFishIntegration = true;
+    options = ["--cmd cd"];
   };
 
   programs.git = {
