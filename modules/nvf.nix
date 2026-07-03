@@ -6,9 +6,6 @@
     # most settings are documented in the appendix
     settings.vim = {
       keymaps = import ./keymaps.nix;
-      luaConfigPre = ''
-        vim.opt.runtimepath:prepend("${./colors/oldschool}")
-      '';
       globals.mapleader = " ";
       lineNumberMode = "relNumber";
       viAlias = true;
@@ -114,7 +111,9 @@
         enable = true;
       };
       luaConfigPost = ''
-        vim.cmd.colorscheme("oldschool");
+        vim.cmd.colorscheme("industry")
+        vim.opt.cmdheight = 0
+        vim.opt.laststatus = 0
       '';
     };
   };
