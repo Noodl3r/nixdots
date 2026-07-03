@@ -28,6 +28,7 @@
       lsp = {
         enable = true;
         formatOnSave = true;
+        inlayHints.enable = true;
         lspkind.enable = true;
         trouble.enable = true;
         otter-nvim.enable = true;

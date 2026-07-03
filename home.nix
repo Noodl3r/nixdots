@@ -34,6 +34,19 @@
     options = ["--cmd cd"];
   };
 
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
+    settings = {
+      add_newline = true;
+      character = {
+        success_symbol = "[ξ](bold cyan)";
+        error_symbol = "[ξ](bold red)";
+        vimcmd_symbol = "[ξ](bold cyan)";
+      };
+    };
+  };
+
   programs.git = {
     enable = true;
     settings.user.name = "Noodl3r";
@@ -67,12 +80,16 @@
       set -g status on
       set -g status-left ""
       set -g status-right ""
-      set -g status-style bg=#1e1e2e,fg=#cdd6f4
+      set -g status-style bg=#000000,fg=#000000
       set -g window-status-style fg=#6c7086,bg=#1e1e2e
-      set -g window-status-current-style fg=#89b4fa,bold,bg=#1e1e2e
+      set -g window-status-current-style fg=#ff00ff,bold,bg=#000000
       set -g window-status-separator ""
       set -g window-status-format " #I "
       set -g window-status-current-format " #I "
+      bind-key h select-pane -L
+      bind-key j select-pane -D
+      bind-key k select-pane -U
+      bind-key l select-pane -R
     '';
   };
 
