@@ -2,7 +2,7 @@
 set -euo pipefail
 
 WALLDIR="${WALLPAPER_DIR:-$HOME/Pictures/Wallpapers}"
-STATE="$HOME/nixos-dotfiles/config/i3"
+STATE="$HOME/nixos-dotfiles/config/i3/wallpaper"
 
 cd "$WALLDIR"
 
