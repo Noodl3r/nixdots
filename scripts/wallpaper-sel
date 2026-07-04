@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+WALLDIR="${WALLPAPER_DIR:-$HOME/Pictures/Wallpapers}"
+STATE="$HOME/.cache/wallpaper"
+
+cd "$WALLDIR"
+
+preview_cmd="kitty +kitten icat --clear --transfer-mode=memory --unicode-placeholder --stdin=no --place={\$FZF_PREVIEW_COLUMNS}x{\$FZF_PREVIEW_LINES}@0x0 \"$WALLDIR\"/{} | sed '\$d'"
+
+selected=$(
+  find . -maxdepth 1 -type f \( -iname '*.png' -o -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.webp' \) \
+    -printf '%f\n' | sort \
+  | fzf --height=100% --reverse \
+        --preview-window=right,70%,border-left \
+        --preview "$preview_cmd"
+)
+
+[[ -z "${selected:-}" ]] && exit 0
+
+full_path="$WALLDIR/$selected"
+echo "$full_path" > "$STATE"
+feh --bg-fill "$full_path"
