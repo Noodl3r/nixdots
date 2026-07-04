@@ -30,9 +30,6 @@ bindsym $mod+d exec "dmenu_run"
 #bindsym $mod+e exec --no-startup-id ~/bin/ts
 bindsym $mod+e exec --no-startup-id kitty -e bash -lc "$HOME/bin/ts"
 
-# Customize Yazi's floating window
-for_window [title="^yazi$"] floating enable, border pixel 2, resize set 800 600, move position center
-
 
 # change focus
 bindsym $mod+h focus left
@@ -157,7 +154,7 @@ exec --no-startup-id xrandr --output eDP --set TearFree on
 exec  --no-startup-id wal -R
 exec  --no-startup-id nohup picom &
 exec  --no-startup-id amixer -q set Master 20% mute
-exec_always --no-startup-id feh --bg-scale ~/.config/i3/wallpaper
+exec_always --no-startup-id sh -c 'feh --bg-scale "$(cat ~/.cache/wallpaper)"'
 
 # exec --no-startup-id inkscape-figures watch
 
