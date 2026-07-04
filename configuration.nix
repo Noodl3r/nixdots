@@ -17,32 +17,32 @@
   networking.networkmanager.enable = true;
 
   time.timeZone = "America/New_York";
-
-  services.displayManager.ly.enable = true;
-  services.xserver = {
-    enable = true;
-    autoRepeatDelay = 200;
-    autoRepeatInterval = 35;
-    windowManager.i3.enable = true;
-  };
-
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-  security.rtkit.enable = true;
-
-  services.tlp = {
-    enable = true;
-    settings = {
-      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-      CPU_SCALING_GOVERNOR_ON_AC = "powersave";
-      CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-      CPU_MAX_PERF_ON_BAT = 80;
+  services = {
+    openssh.enable = true;
+    displayManager.ly.enable = true;
+    xserver = {
+      enable = true;
+      autoRepeatDelay = 200;
+      autoRepeatInterval = 35;
+      windowManager.i3.enable = true;
+    };
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
+    };
+    tlp = {
+      enable = true;
+      settings = {
+        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+        CPU_SCALING_GOVERNOR_ON_AC = "powersave";
+        CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+        CPU_MAX_PERF_ON_BAT = 80;
+      };
     };
   };
+  security.rtkit.enable = true;
 
   users.users.noodl3 = {
     isNormalUser = true;
@@ -52,17 +52,18 @@
       tree
     ];
   };
-
-  programs.firefox.enable = true;
-  programs.fish.enable = true;
+  programs = {
+    firefox.enable = true;
+    fish.enable = true;
+  };
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
     vim-full
     helix
-    #tmux
     curl
     wget
+    fd
     xclip
     git
     lazygit
@@ -107,11 +108,11 @@
     flameshot
     zathura
     bunnyfetch
-
+    mpv
+    smartmontools
     #Unfree trash
     discord
     spotify
-    fd
   ];
 
   fonts.packages = with pkgs; [

@@ -157,7 +157,7 @@ exec --no-startup-id xrandr --output eDP --set TearFree on
 exec  --no-startup-id wal -R
 exec  --no-startup-id nohup picom &
 exec  --no-startup-id amixer -q set Master 20% mute
-exec_always --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/vaporwaveJapanesePlants.jpg
+exec_always --no-startup-id feh --bg-scale ~/.config/i3/wallpaper
 
 # exec --no-startup-id inkscape-figures watch
 
@@ -179,4 +179,5 @@ bar {
     font pango:JetBrainsMono 10
     position top
     strip_workspace_numbers yes
+    tray_output none
 }
