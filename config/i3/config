@@ -113,6 +113,7 @@ exec --no-startup-id kitty -e bash -lc "$HOME/bin/ts"
 exec --no-startup-id tmux new-session -d
 # Assigning startup applications
 for_window [class="steam"] move container to workspace $ws8
+for_window [class="Steam"] move container to workspace $ws8
 for_window [class="Steam"] floating enable
 for_window [class="discord"] move container to workspace $ws8
 for_window [class="Spotify"] move container to workspace $ws10
