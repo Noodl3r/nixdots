@@ -101,6 +101,8 @@
     pkg-config
     lld
     ninja
+    opam
+    ocaml
     # languages
     python3
     rustc
@@ -116,6 +118,8 @@
     bunnyfetch
     mpv
     smartmontools
+    multimarkdown
+    entr
     #Unfree trash
     discord
     spotify

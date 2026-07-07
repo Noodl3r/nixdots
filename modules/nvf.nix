@@ -69,6 +69,11 @@
         rust.enable = true;
         docker.enable = true;
         lua.enable = true;
+        ocaml = {
+          enable = true;
+          format.enable = true;
+          lsp.enable = true;
+        };
         typst = {
           enable = true;
           extensions.typst-preview-nvim.setupOpts = {
