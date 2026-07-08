@@ -27,8 +27,7 @@ bindsym $mod+q kill
 bindsym $mod+w exec "firefox"
 bindsym $mod+Shift+Return exec i3lock -c 000000
 bindsym $mod+d exec "dmenu_run"
-#bindsym $mod+e exec --no-startup-id ~/bin/ts
-bindsym $mod+e exec --no-startup-id kitty -e bash -lc "$HOME/bin/ts"
+bindsym $mod+e exec --no-startup-id kitty ts
 
 
 # change focus

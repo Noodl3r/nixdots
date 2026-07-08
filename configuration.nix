@@ -90,6 +90,7 @@
     unzip
     xz
     p7zip
+    file
     #dev
     gcc
     gdb
@@ -120,6 +121,11 @@
     smartmontools
     multimarkdown
     entr
+    tor-browser
+    qbittorrent
+    wine
+    wineWow64Packages.stable
+    winetricks
     #Unfree trash
     discord
     spotify

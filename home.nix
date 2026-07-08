@@ -96,6 +96,7 @@
 
       set-option -g set-clipboard on
       bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -in"
+      bind-key e display-popup -E -w 80% -h 80% "ts"
     '';
   };
 
