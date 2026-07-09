@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# vg - ripgrep search across subdirectories, fzf picker, opens nvim at matched line
+
+selection=$(rg --line-number --no-heading --color=always --smart-case "$@" . | \
+    fzf --ansi \
+        --delimiter ':' \
+        --preview 'bat --style=numbers --color=always --highlight-line {2} {1} 2>/dev/null || cat {1}' \
+        --preview-window '+{2}-/2')
+
+[ -z "$selection" ] && exit 0
+
+file=$(echo "$selection" | cut -d ':' -f 1)
+line=$(echo "$selection" | cut -d ':' -f 2)
+
+nvim "+$line" -- "$file"
