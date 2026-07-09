@@ -149,6 +149,7 @@ mode "resize" {
 
 exec --no-startup-id setxkbmap -option caps:escape
 exec --no-startup-id xrandr --output eDP --set TearFree on
+exec --no-startup-id i3-auto-layout
 
 # WALL PAPER
 exec  --no-startup-id wal -R
@@ -161,9 +162,6 @@ exec_always --no-startup-id sh -c 'feh --bg-scale "$(cat ~/.cache/wallpaper)"'
 # SCREENSHOTS :
 bindsym $mod+Shift+s exec "flameshot gui -c -p $HOME/Pictures/Screenshots"
 bindsym $mod+Shift+v exec "~/bin/record-toggle.sh"
-
-#Layout script
-exec_always --no-startup-id i3-auto-layout
 
 #Hiding window title bar
 for_window [class="."] border none
