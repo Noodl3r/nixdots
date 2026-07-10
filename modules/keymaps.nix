@@ -66,7 +66,7 @@
     key = "<C-l>";
     mode = "i";
     silent = true;
-    action = "<c-g>u<Esc>[s1z=']a<c-g>u";
+    action = "<c-g>u<Esc>[s1z=`]a<c-g>u";
   }
 
   {

@@ -17,6 +17,8 @@
         shiftwidth = 2;
         signcolumn = "no";
         scrolloff = 6;
+        wrap = true;
+        breakindent = true;
       };
       visuals = {
         rainbow-delimiters.enable = true;
