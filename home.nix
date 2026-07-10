@@ -17,7 +17,6 @@
       set -f fish_cursor_insert line blink
       set -f fish_cursor_replace_one underscore blink
       set -f fish_cursor_visual block
-      set -gx DIRENV_LOG_FORMAT ""
       if test -r "$HOME/.opam/opam-init/init.fish"
         source "$HOME/.opam/opam-init/init.fish" > /dev/null 2> /dev/null
       end
