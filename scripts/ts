@@ -40,6 +40,7 @@ else
             "$HOME/work" \
             #"$HOME/school/compSciProjects"\
             2>/dev/null)
+            "$HOME/nixos-dotfiles"
     )
     #selected=$(printf '%s\n' "${selected[@]}" | fzf --border --print-query)
     selected=$(printf '%s\n' "${selected[@]}" | fzf \

@@ -18,6 +18,7 @@
         signcolumn = "no";
         scrolloff = 6;
         wrap = true;
+        linebreak = true;
         breakindent = true;
       };
       visuals = {

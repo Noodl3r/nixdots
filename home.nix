@@ -17,6 +17,7 @@
       set -f fish_cursor_insert line blink
       set -f fish_cursor_replace_one underscore blink
       set -f fish_cursor_visual block
+      set -gx DIRENV_LOG_FORMAT ""
       if test -r "$HOME/.opam/opam-init/init.fish"
         source "$HOME/.opam/opam-init/init.fish" > /dev/null 2> /dev/null
       end
@@ -35,6 +36,19 @@
     enable = true;
     enableFishIntegration = true;
     options = ["--cmd cd"];
+  };
+
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+    config = {
+      global = {
+        # Hides block
+        hide_env_diff = true;
+        # Silence everything
+        # log_format = "-";
+      };
+    };
   };
 
   programs.starship = {
@@ -76,6 +90,7 @@
       sensible
       vim-tmux-navigator
       resurrect
+      continuum
     ];
     # must be a better way to do this lol
     extraConfig = ''
