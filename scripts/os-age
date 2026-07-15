@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+INSTALL_DATE=1782431560
+NOW=$(date +%s)
+DAYS=$(( (NOW-INSTALL_DATE) / 86400))
+
+echo "${DAYS} days"

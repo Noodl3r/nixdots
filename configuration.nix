@@ -8,10 +8,13 @@
     ./hardware-configuration.nix
     ./modules/nvf.nix
   ];
-
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.configurationLimit = 15;
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+      systemd-boot.configurationLimit = 15;
+    };
+  };
 
   networking.hostName = "Multivac"; # Define your hostname.
   networking.networkmanager.enable = true;
@@ -71,6 +74,7 @@
     wget
     fd
     xclip
+    xinit
     git
     lazygit
     gh
@@ -126,7 +130,7 @@
     wine
     wineWow64Packages.stable
     winetricks
-    #Unfree trash
+    # Unfree trash
     discord
     spotify
   ];

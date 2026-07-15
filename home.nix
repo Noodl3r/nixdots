@@ -101,9 +101,11 @@
         set -g status on
         set -g status-left ""
         set -g status-right ""
-        set -g status-style bg=#000000,fg=#000000
-        set -g window-status-style fg=#6c7086,bg=#1e1e2e
-        set -g window-status-current-style fg=#ff00ff,bold,bg=#000000
+
+        set -g status-style fg=#000000,bg=#000000
+        set -g window-status-current-style fg=#ffffff,bg=#0088cc,bold
+        set -g window-status-style fg=#ffffff,bg=#333333
+
         set -g window-status-separator ""
         set -g window-status-format " #I "
         set -g window-status-current-format " #I "
@@ -115,6 +117,9 @@
         set-option -g set-clipboard on
         bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -in"
         bind-key e display-popup -E -w 80% -h 80% "ts"
+        set -g @continuum-save-interval '10'
+        set -g @continuum-restore 'on'
+        set -g @continuum-save 'on'
       '';
     };
 
@@ -127,6 +132,31 @@
           "browser.compactmode.show" = true;
         };
         userChrome = builtins.readFile ./config/firefox/userChrome.css;
+      };
+    };
+    fastfetch = {
+      enable = true;
+      settings = {
+        logo = {
+          source = "nixos";
+          type = "small";
+        };
+        dispay.separator = ":";
+        modules = [
+          "title"
+          "separator"
+          "os"
+          # Silliness for system age
+          {
+            type = "command";
+            key = "OS Age ";
+            keyColor = "36";
+            command = "os-age";
+          }
+          "shell"
+          "wm"
+          "packages"
+        ];
       };
     };
   };

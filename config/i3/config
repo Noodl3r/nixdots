@@ -174,5 +174,5 @@ bar {
     font pango:JetBrainsMono 10
     position top
     strip_workspace_numbers yes
-    tray_output none
+    binding_mode_indicator no
 }
