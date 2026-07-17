@@ -7,7 +7,7 @@
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         "browser.compactmode.show" = true;
       };
-      userChrome = builtins.readFile ../config/firefox/userChrome.css;
+      userChrome = builtins.readFile ../../config/firefox/userChrome.css;
     };
   };
 }

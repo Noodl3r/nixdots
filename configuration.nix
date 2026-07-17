@@ -67,26 +67,13 @@
 
   nixpkgs.config.allowUnfree = true;
   environment.systemPackages = with pkgs; [
-    vim-full
-    helix
     curl
     wget
     fd
-    xclip
     xinit
-    git
-    lazygit
-    gh
-    kitty
-    picom
-    feh
     brightnessctl
     pulseaudio
-    unclutter
-    i3-auto-layout
     fish
-    fzf
-    dmenu
     ripgrep
     bat
     zip
@@ -94,44 +81,6 @@
     xz
     p7zip
     file
-    #dev
-    gcc
-    gdb
-    clang
-    clang-tools
-    valgrind
-    cmake
-    gnumake
-    pkg-config
-    lld
-    ninja
-    opam
-    ocaml
-    # languages
-    python3
-    rustc
-    cargo
-    rust-analyzer
-    rustfmt
-    clippy
-    nodejs
-    typst
-    # utilities
-    flameshot
-    zathura
-    bunnyfetch
-    mpv
-    smartmontools
-    multimarkdown
-    entr
-    tor-browser
-    qbittorrent
-    wine
-    wineWow64Packages.stable
-    winetricks
-    # Unfree trash
-    discord
-    spotify
   ];
 
   fonts.packages = with pkgs; [
