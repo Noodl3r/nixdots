@@ -30,7 +30,7 @@
     key = "<leader>d";
     mode = "v";
     silent = true;
-    action = "\"+ygvd";
+    action = "\"+d";
   }
 
   {
