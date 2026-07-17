@@ -3,21 +3,13 @@
   pkgs,
   ...
 }: {
-  home = {
-    username = "noodl3";
-    homeDirectory = "/home/noodl3";
-    stateVersion = "25.05";
-    sessionVariables = {
-      DIRENV_LOG_FORMAT = "";
-    };
-    file = {
-      ".local/bin".source = ./scripts;
-      ".config/i3".source = ./config/i3;
-      ".config/i3status".source = ./config/i3status;
-      ".config/kitty".source = ./config/kitty;
-      ".config/picom".source = ./config/picom;
-      ".vimrc".source = ./config/vim/vimrc;
-    };
+  home.file = {
+    ".local/bin".source = ./scripts;
+    ".config/i3".source = ./config/i3;
+    ".config/i3status".source = ./config/i3status;
+    ".config/kitty".source = ./config/kitty;
+    ".config/picom".source = ./config/picom;
+    ".vimrc".source = ./config/vim/vimrc;
   };
   programs = {
     fish = {
@@ -36,8 +28,8 @@
       shellAliases = {
         btw = "echo I use nixos btw";
         v = "nvim";
-        rebuild = "sudo nixos-rebuild switch --flake ~/nixos-dotfiles#multivac --no-reexec";
-        check = "nix flake check ~/nixos-dotfiles";
+        rebuild = "sudo nixos-rebuild switch --flake ~/dotfiles#multivac --no-reexec";
+        check = "nix flake check ~/dotfiles";
         lg = "lazygit";
       };
     };
@@ -145,17 +137,17 @@
         modules = [
           "title"
           "separator"
+          "host"
           "os"
           # Silliness for system age
           {
             type = "command";
             key = "OS Age ";
             keyColor = "36";
-            command = "os-age";
+            text = "os-age";
           }
           "shell"
           "wm"
-          "packages"
         ];
       };
     };
