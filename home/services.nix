@@ -5,19 +5,4 @@
     inactiveInterval = 5;
     xautolock.enable = true;
   };
-
-  systemd.user.services.i3-autotiler = {
-    Unit = {
-      Description = "i3 autotiling serice";
-      After = ["graphical-session.target"];
-      PartOf = ["graphical-session.target"];
-    };
-    Service = {
-      ExecStart = "${pkgs.i3-auto-layout}/bin/i3-auto-layout";
-      Restart = "on-failure";
-    };
-    Install = {
-      WantedBy = ["graphical-session.target"];
-    };
-  };
 }

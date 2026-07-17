@@ -149,7 +149,7 @@ mode "resize" {
 
 exec --no-startup-id setxkbmap -option caps:escape
 exec --no-startup-id xrandr --output eDP --set TearFree on
-# exec --no-startup-id i3-auto-layout
+exec --no-startup-id nohup i3-auto-layout &
 
 # WALL PAPER
 exec  --no-startup-id wal -R
