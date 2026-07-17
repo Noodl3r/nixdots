@@ -26,6 +26,12 @@
     silent = false;
     action = "\"+y";
   }
+  {
+    key = "<leader>d";
+    mode = "v";
+    silent = true;
+    action = "\"+ygvd";
+  }
 
   {
     key = "<leader>Y";
