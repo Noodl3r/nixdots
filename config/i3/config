@@ -175,4 +175,5 @@ bar {
     position top
     strip_workspace_numbers yes
     binding_mode_indicator no
+    tray_output none
 }

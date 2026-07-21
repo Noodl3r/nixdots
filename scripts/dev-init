@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+TEMPLATES="$HOME/dev-shells"
+
+choice=$(
+    find "$TEMPLATES" -mindepth 1 -maxdepth 1 -type d |
+    xargs -n1 basename |
+    fzf
+)
+
+cp -r "$TEMPLATES/$choice"/. .
+direnv allow
