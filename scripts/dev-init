@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-TEMPLATES="$HOME/dev-shells"
+TEMPLATES="$HOME/dev/nix-devshells/"
 
 choice=$(
     find "$TEMPLATES" -mindepth 1 -maxdepth 1 -type d |
