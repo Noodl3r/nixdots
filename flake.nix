@@ -19,11 +19,14 @@
     home-manager,
     ...
   }: let
-    mkHost = config: nixpkgs.lib.nixosSystem{
+    mkHost = host: nixpkgs.lib.nixosSystem{
       system = "x86_64-linux";
+      specialArgs = {
+	inherit host;
+      };
       modules = [
 	nvf.nixosModules.default
-	config
+	./configuration.nix
 	home-manager.nixosModules.home-manager
 	{
 	  home-manager = {
@@ -37,8 +40,8 @@
     };
     in {
     nixosConfigurations = {
-	multivac = mkHost ./hosts/multivac/configuration.nix;
-	minivac  = mkHost ./hosts/minivac/configuration.nix;
+	multivac = mkHost "multivac";
+	minivac  = mkHost "minivac";
     };
   };
 }
