@@ -18,22 +18,31 @@
     nvf,
     home-manager,
     ...
-  }: {
-    nixosConfigurations.multivac = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        nvf.nixosModules.default
-        ./configuration.nix
-        home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.noodl3 = import ./home.nix;
-            backupFileExtension = "backup";
-          };
-        }
-      ];
+  }: let
+    mkHost = host:
+      nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = {
+          inherit host;
+        };
+        modules = [
+          nvf.nixosModules.default
+          ./configuration.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.noodl3 = import ./home.nix;
+              backupFileExtension = "backup";
+            };
+          }
+        ];
+      };
+  in {
+    nixosConfigurations = {
+      multivac = mkHost "multivac";
+      minivac = mkHost "minivac";
     };
   };
 }

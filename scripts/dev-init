@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-repo="$HOME/dev/nix-shells"
+TEMPLATES="$HOME/dev/nix-devshells/"
 
 choice=$(
     nix flake show --json "$repo" \

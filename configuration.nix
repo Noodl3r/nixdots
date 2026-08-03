@@ -2,10 +2,11 @@
   config,
   lib,
   pkgs,
+  host,
   ...
 }: {
   imports = [
-    ./hardware-configuration.nix
+    ./hardware/${host}.nix
     ./modules/nvf.nix
   ];
   boot = {
@@ -16,7 +17,7 @@
     };
   };
 
-  networking.hostName = "Multivac"; # Define your hostname.
+  networking.hostName = host;
   networking.networkmanager.enable = true;
 
   time.timeZone = "America/New_York";

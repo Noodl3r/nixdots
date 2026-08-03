@@ -15,7 +15,8 @@
     shellAliases = {
       btw = "echo I use nixos btw";
       v = "nvim";
-      rebuild = "sudo nixos-rebuild switch --flake ~/dotfiles#multivac --no-reexec";
+      rebuild-mini = "sudo nixos-rebuild switch --flake ~/dotfiles#minivac --no-reexec";
+      rebuild-multi = "sudo nixos-rebuild switch --flake ~/dotfiles#multivac --no-reexec";
       check = "nix flake check ~/dotfiles";
       lg = "lazygit";
     };
