@@ -1,14 +1,25 @@
 #!/usr/bin/env bash
-
 set -euo pipefail
 
-TEMPLATES="$HOME/dev-shells"
+repo="$HOME/dev/nix-shells"
 
 choice=$(
-    find "$TEMPLATES" -mindepth 1 -maxdepth 1 -type d |
-    xargs -n1 basename |
-    fzf
+    nix flake show --json "$repo" \
+        | jq -r '.templates | keys[]' \
+        | sort \
+        | fzf --prompt="Template: "
 )
 
-cp -r "$TEMPLATES/$choice"/. .
+[[ -n "$choice" ]]
+
+nix flake init --template "$repo#$choice"
 direnv allow
+
+if [[ "$PWD" == "$HOME" ]]; then
+    echo "Refusing to initialize git repo in HOME"
+    exit 1
+fi
+git init
+git add .
+git commit -m "Initial commit"
+
