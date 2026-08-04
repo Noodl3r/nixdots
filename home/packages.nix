@@ -18,7 +18,6 @@
     jq
     # utilities
     flameshot
-    zathura
     bunnyfetch
     mpv
     smartmontools

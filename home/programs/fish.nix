@@ -20,5 +20,11 @@
       check = "nix flake check ~/dotfiles";
       lg = "lazygit";
     };
+    functions = {
+      zath = ''
+        nohup zathura $argv >/dev/null 2>&1 &
+        disown
+      '';
+    };
   };
 }
