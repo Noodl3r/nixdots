@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+file=$(fd --type f --hidden --follow --extension .pdf --exclude .git . 2>/dev/null | \
+fzf)
+
+[ -z "$file"] && exit 0
+
+zathura -- "$file"
