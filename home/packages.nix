@@ -39,6 +39,7 @@
     ocaml
     # utilities
     flameshot
+    sioyek
     zathura
     bunnyfetch
     mpv
