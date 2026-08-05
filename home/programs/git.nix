@@ -1,7 +1,13 @@
 {
   programs.git = {
     enable = true;
-    settings.user.name = "Noodl3r";
-    settings.user.email = "echelon.r6s@gmail.com";
+    settings = {
+      user = {
+        name = "Noodl3r";
+        email = "echelon.r6s@gmail.com";
+      };
+      init.defaultBranch = "main";
+      push = {autoSetupRemote = true;};
+    };
   };
 }

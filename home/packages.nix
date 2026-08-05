@@ -15,32 +15,9 @@
     i3-auto-layout
     dmenu
     fzf
-    #dev
-    #gcc
-    gdb
-    clang
-    clang-tools
-    valgrind
-    cmake
-    gnumake
-    pkg-config
-    lld
-    ninja
-    # languages
-    python3
-    rustc
-    cargo
-    rust-analyzer
-    rustfmt
-    clippy
-    nodejs
-    typst
-    opam
-    ocaml
+    jq
     # utilities
     flameshot
-    sioyek
-    zathura
     bunnyfetch
     mpv
     smartmontools

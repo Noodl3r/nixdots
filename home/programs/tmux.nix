@@ -12,7 +12,15 @@
       sensible
       vim-tmux-navigator
       resurrect
-      continuum
+      {
+        plugin = continuum;
+        extraConfig = ''
+          set -g @continuum-save-interval '10'
+          set -g @continuum-restore 'on'
+          set -g @continuum-save 'on'
+          set -g @continuum-boot 'on'
+        '';
+      }
     ];
     # must be a better way to do this lol
     extraConfig = ''
@@ -32,13 +40,11 @@
       bind-key j select-pane -D
       bind-key k select-pane -U
       bind-key l select-pane -R
+      bind-key x kill-pane
 
       set-option -g set-clipboard on
       bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -in"
       bind-key e display-popup -E -w 80% -h 80% "ts"
-      set -g @continuum-save-interval '10'
-      set -g @continuum-restore 'on'
-      set -g @continuum-save 'on'
     '';
   };
 }

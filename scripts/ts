@@ -42,7 +42,6 @@ else
             2>/dev/null)
             "$HOME/dotfiles"
     )
-    #selected=$(printf '%s\n' "${selected[@]}" | fzf --border --print-query)
     selected=$(printf '%s\n' "${selected[@]}" | fzf \
         --border \
         --print-query \

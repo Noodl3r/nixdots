@@ -16,5 +16,6 @@
     ./home/programs/fastfetch.nix
     ./home/programs/firefox.nix
     ./home/programs/tmux.nix
+    ./home/programs/zathura.nix
   ];
 }
