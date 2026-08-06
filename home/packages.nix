@@ -11,11 +11,12 @@
     kitty
     picom
     feh
-    unclutter
-    i3-auto-layout
+    unclutter-xfixes
     dmenu
     fzf
     jq
+    i3-auto-layout
+    typst
     # utilities
     flameshot
     bunnyfetch
