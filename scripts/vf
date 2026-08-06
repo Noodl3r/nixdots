@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # vf - fzf file finder across subdirectories, opens in nvim
 
-file=$(fd --type f --hidden --follow --exclude .git . 2>/dev/null | \
+file=$(fd --type f --hidden --follow --exclude .git --exclude .pdf . 2>/dev/null | \
     fzf --preview 'bat --style=numbers --color=always {} 2>/dev/null || cat {}')
 
 [ -z "$file" ] && exit 0
