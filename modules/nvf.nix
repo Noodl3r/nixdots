@@ -124,6 +124,9 @@
         vim.opt.cmdheight = 0
         vim.opt.laststatus = 0
       '';
+      luaConfigRC = {
+        typst = builtins.readFile ./lua/typst.lua;
+      };
     };
   };
 }
