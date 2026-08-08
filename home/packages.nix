@@ -29,5 +29,6 @@
     # Unfree trash
     discord
     spotify
+    google-chrome
   ];
 }
