@@ -65,7 +65,10 @@
 
         nix.enable = true;
         markdown.enable = true;
-        clang.enable = true;
+        clang = {
+          enable = true;
+          extraDiagnostics.enable = false;
+        };
         cmake.enable = true;
         java.enable = true;
         python.enable = true;
@@ -88,7 +91,6 @@
         enable = true;
         nvim-lint.enable = true;
         config.virtual_text = true;
-        presets.cpplint.enable = false;
       };
       autocomplete = {
         blink-cmp.enable = true;
