@@ -88,6 +88,7 @@
         enable = true;
         nvim-lint.enable = true;
         config.virtual_text = true;
+        presets.cpplint.enable = false;
       };
       autocomplete = {
         blink-cmp.enable = true;
