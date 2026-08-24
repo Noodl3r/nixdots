@@ -21,9 +21,5 @@
       lg = "lazygit";
       dl = "cd ~/Downloads && ls -hatrs";
     };
-    environment.Variables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-    };
   };
 }

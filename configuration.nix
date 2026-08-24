@@ -67,22 +67,29 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-  environment.systemPackages = with pkgs; [
-    curl
-    wget
-    fd
-    xinit
-    brightnessctl
-    pulseaudio
-    fish
-    ripgrep
-    bat
-    zip
-    unzip
-    xz
-    p7zip
-    file
-  ];
+  environment = {
+    systemPackages = with pkgs; [
+      curl
+      wget
+      fd
+      xinit
+      brightnessctl
+      pulseaudio
+      fish
+      ripgrep
+      bat
+      zip
+      unzip
+      xz
+      p7zip
+      file
+    ];
+
+    variables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
+    };
+  };
 
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
