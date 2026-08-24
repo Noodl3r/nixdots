@@ -27,7 +27,7 @@
       set -g status-position top
       set -g status on
       set -g status-left ""
-      set -g status-right ""
+      set -g status-right "#[fg=#ffffff,bg=#0088cc, bold]#S"
 
       set -g status-style fg=#000000,bg=#000000
       set -g window-status-current-style fg=#ffffff,bg=#0088cc,bold

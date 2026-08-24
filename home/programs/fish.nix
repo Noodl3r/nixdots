@@ -19,6 +19,11 @@
       rebuild-multi = "sudo nixos-rebuild switch --flake ~/dotfiles#multivac --no-reexec";
       check = "nix flake check ~/dotfiles";
       lg = "lazygit";
+      dl = "cd ~/Downloads && ls -hatrs";
+    };
+    environment.Variables = {
+      EDITOR = "nvim";
+      VISUAL = "nvim";
     };
   };
 }

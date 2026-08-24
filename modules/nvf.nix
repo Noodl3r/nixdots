@@ -13,8 +13,8 @@
       autopairs.nvim-autopairs.enable = true;
       opts = {
         expandtab = true;
-        tabstop = 2;
-        shiftwidth = 2;
+        tabstop = 4;
+        shiftwidth = 4;
         signcolumn = "no";
         scrolloff = 6;
         wrap = true;
