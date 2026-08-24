@@ -1,0 +1,188 @@
+#!/usr/bin/env bash
+# hw — fzf launcher for typst homework files under $SCHOOL_DIR.
+# course/homework layout: $SCHOOL_DIR/<course>/{homework,notes,projects}
+# homework files are numbered NNhw.typ, next to a shared hwtemplate.typ.
+# must be run inside tmux — typst watch gets its own split pane there.
+#
+# hw                pick a course (skipped if you're already in one) then a homework
+# hw --no-watch     same, but don't auto-start typst watch / zathura
+# hw new-course X   scaffold a course dir under $SCHOOL_DIR
+# hw list           every homework file, one per line
+#
+# in the homework picker: enter opens/creates, ^D deletes, ^N jumps to notes/main.typ
+set -euo pipefail
+
+SCHOOL="${SCHOOL_DIR:-$HOME/school}"
+ED="${EDITOR:-vim}"
+UNI="${HW_UNIVERSITY:-Boston University}"
+AUTHOR="${HW_AUTHOR:-Dylan Sheehan}"
+AUTOSTART="${HW_AUTOSTART:-1}"
+SPLIT_PCT="${HW_SPLIT_PCT:-23}"
+SELF_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+
+die() { echo "hw: $*" >&2; exit 1; }
+
+command -v fzf >/dev/null 2>&1 || die "fzf not found"
+[[ -d "$SCHOOL" ]] || die "no such dir: $SCHOOL"
+
+# course dir if $PWD is under $SCHOOL/<course>/..., else fail
+in_course() {
+  case "$PWD" in
+    "$SCHOOL"/*)
+      local rel="${PWD#"$SCHOOL"/}"
+      echo "$SCHOOL/${rel%%/*}"
+      ;;
+    *) return 1 ;;
+  esac
+}
+
+field() { grep -oE "$1: *\"[^\"]*\"" "$2" 2>/dev/null | head -1 | sed -E 's/.*"(.*)"/\1/'; }
+
+next_num() {
+  local n
+  n=$(ls "$1" 2>/dev/null | grep -E '^[0-9]+hw\.typ$' | sed -E 's/([0-9]+)hw\.typ/\1/' | sort -n | tail -1)
+  printf '%02d' $((10#${n:-0} + 1))
+}
+
+latest_hw() { ls "$1"/*.typ 2>/dev/null | grep -E '/[0-9]+hw\.typ$' | sort -r | head -1 || true; }
+
+scaffold() {
+  local name="$1" dir
+  [[ -n "$name" ]] || die "usage: hw new-course NAME"
+  dir="$SCHOOL/$name"
+  [[ -e "$dir" ]] && die "$dir already exists"
+  mkdir -p "$dir"/{homework,notes,projects}
+  if [[ -f "$SELF_DIR/hwtemplate.typ" ]]; then
+    cp "$SELF_DIR/hwtemplate.typ" "$dir/homework/hwtemplate.typ"
+  else
+    : > "$dir/homework/hwtemplate.typ"
+    echo "hw: heads up, no hwtemplate.typ next to this script — left it empty" >&2
+  fi
+  echo "made $dir"
+}
+
+new_hw() {
+  local dir="$1" hwdir="$1/homework" n f ref course university author
+  mkdir -p "$hwdir"
+  n=$(next_num "$hwdir")
+  f="$hwdir/${n}hw.typ"
+  [[ -e "$f" ]] && die "$f already exists"
+
+  ref=$(latest_hw "$hwdir")
+  if [[ -n "$ref" ]]; then
+    course=$(field course "$ref")
+    university=$(field university "$ref")
+    author=$(field author "$ref")
+  fi
+
+  cat > "$f" <<EOF
+#import "hwtemplate.typ": *
+#show: homework.with(
+  course: "${course:-$(basename "$dir")}",
+  university: "${university:-$UNI}",
+  author: "${author:-$AUTHOR}",
+  hw-number: $((10#$n)),
+  date: datetime.today(),
+)
+#qs[
+
+]
+EOF
+  echo "$f"
+}
+
+notes_file() {
+  local nf="$1/notes/main.typ"
+  mkdir -p "$(dirname "$nf")"
+  [[ -f "$nf" ]] || : > "$nf"
+  echo "$nf"
+}
+
+pick_course() {
+  find "$SCHOOL" -mindepth 1 -maxdepth 1 -type d | sort \
+    | fzf --prompt="course> " --height=50% --reverse
+}
+
+pick_hw() {
+  local dir="$1" hwdir="$1/homework"
+  mkdir -p "$hwdir"
+
+  while true; do
+    local n new list raw key sel
+    n=$(next_num "$hwdir")
+    new="+ new (${n})"
+    list=$(ls "$hwdir" 2>/dev/null | grep -E '^[0-9]+hw\.typ$' | sort -r)
+
+    raw=$(printf '%s\n%s\n' "$new" "$list" \
+      | fzf --prompt="[$(basename "$dir")]> " --height=50% --reverse \
+            --expect=ctrl-d,ctrl-n \
+            --header="enter: open/new   ^D: delete   ^N: notes") || return 1
+
+    key=$(sed -n 1p <<<"$raw")
+    sel=$(sed -n 2p <<<"$raw")
+    [[ -n "$sel" ]] || return 1
+
+    case "$key" in
+      ctrl-n)
+        notes_file "$dir"
+        return
+        ;;
+      ctrl-d)
+        [[ "$sel" == "$new" ]] && continue
+        read -rp "delete $sel? [y/N] " ans
+        [[ "$ans" =~ ^[Yy]$ ]] && rm -f "$hwdir/$sel"
+        continue
+        ;;
+      *)
+        if [[ "$sel" == "$new" ]]; then new_hw "$dir"; else echo "$hwdir/$sel"; fi
+        return
+        ;;
+    esac
+  done
+}
+
+listall() {
+  find "$SCHOOL" -mindepth 3 -maxdepth 3 -type f -regex '.*/homework/[0-9]+hw\.typ' | sort
+}
+
+open_typ() {
+  local f="$1" pdf="${1%.typ}.pdf"
+
+  if [[ "$AUTOSTART" != 1 ]]; then
+    "$ED" "$f"
+    return
+  fi
+
+  if command -v zathura >/dev/null 2>&1; then
+    ( local t=0
+      while [[ ! -s "$pdf" && $t -lt 150 ]]; do sleep 0.1; t=$((t + 1)); done
+      [[ -s "$pdf" ]] && zathura --fork "$pdf" >/dev/null 2>&1
+    ) &
+    disown
+  fi
+
+  if command -v typst >/dev/null 2>&1; then
+    tmux split-window -h -d -l "${SPLIT_PCT}%" typst watch "$f"
+  fi
+
+  "$ED" "$f"
+}
+
+[[ "${1:-}" == "--no-watch" ]] && { AUTOSTART=0; shift; }
+
+case "${1:-}" in
+  new-course) scaffold "${2:-}"; exit ;;
+  list) listall; exit ;;
+  -h|--help) sed -n '2,14p' "${BASH_SOURCE[0]}"; exit ;;
+esac
+
+[[ -n "${TMUX:-}" ]] || die "run this inside a tmux session"
+
+course_dir=$(in_course) || course_dir=$(pick_course) || exit 0
+[[ -n "$course_dir" ]] || exit 0
+
+target=$(pick_hw "$course_dir") || exit 0
+[[ -n "$target" ]] || exit 0
+
+echo "opening $target"
+open_typ "$target"

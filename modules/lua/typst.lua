@@ -2,14 +2,18 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = "typst",
 	callback = function()
 		local function typst_watch()
-			vim.cmd("vsplit")
-			vim.cmd("vertical resize 23")
-
 			local file = vim.fn.expand("%:p")
 
-			vim.cmd("terminal typst watch " .. vim.fn.shellescape(file))
-
-			vim.cmd("wincmd h")
+			vim.fn.system({
+				"tmux",
+				"split-window",
+				"-h",
+				"-p",
+				"23",
+				"typst",
+				"watch",
+				file,
+			})
 		end
 
 		vim.keymap.set("n", "<leader>c", typst_watch, {

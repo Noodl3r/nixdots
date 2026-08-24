@@ -9,6 +9,8 @@
       set -f fish_cursor_insert line blink
       set -f fish_cursor_replace_one underscore blink
       set -f fish_cursor_visual block
+      set -gx EDITOR nvim
+      set -gx VISUAL nvim
     '';
     #set -gx DIRENV_LOG_FORMAT ""
 
