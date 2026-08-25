@@ -1,15 +1,12 @@
 #!/usr/bin/env bash
-# hw — fzf launcher for typst homework files under $SCHOOL_DIR.
-# course/homework layout: $SCHOOL_DIR/<course>/{homework,notes,projects}
-# homework files are numbered NNhw.typ, next to a shared hwtemplate.typ.
-# must be run inside tmux — typst watch gets its own split pane there.
-#
-# hw                pick a course (skipped if you're already in one) then a homework
-# hw --no-watch     same, but don't auto-start typst watch / zathura
+# hw            pick a course then a homework
+# hw --no-watch same, but don't auto-start typst watch / zathura
 # hw new-course X   scaffold a course dir under $SCHOOL_DIR
-# hw list           every homework file, one per line
+# hw list       every homework file, one per line
+# hw sessions   course sessions currently running, and what's open in each
 #
-# in the homework picker: enter opens/creates, ^D deletes, ^N jumps to notes/main.typ
+# course picker: enter browses its homeworks, ^N jumps straight to its notes
+# homework picker: enter opens/creates, ^D deletes, ^N jumps to notes/main.typ
 set -euo pipefail
 
 SCHOOL="${SCHOOL_DIR:-$HOME/school}"
@@ -19,22 +16,12 @@ AUTHOR="${HW_AUTHOR:-Dylan Sheehan}"
 AUTOSTART="${HW_AUTOSTART:-1}"
 SPLIT_PCT="${HW_SPLIT_PCT:-23}"
 SELF_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+SELF_PATH="$SELF_DIR/$(basename -- "${BASH_SOURCE[0]}")"
 
 die() { echo "hw: $*" >&2; exit 1; }
 
 command -v fzf >/dev/null 2>&1 || die "fzf not found"
 [[ -d "$SCHOOL" ]] || die "no such dir: $SCHOOL"
-
-# course dir if $PWD is under $SCHOOL/<course>/..., else fail
-in_course() {
-  case "$PWD" in
-    "$SCHOOL"/*)
-      local rel="${PWD#"$SCHOOL"/}"
-      echo "$SCHOOL/${rel%%/*}"
-      ;;
-    *) return 1 ;;
-  esac
-}
 
 field() { grep -oE "$1: *\"[^\"]*\"" "$2" 2>/dev/null | head -1 | sed -E 's/.*"(.*)"/\1/'; }
 
@@ -52,11 +39,11 @@ scaffold() {
   dir="$SCHOOL/$name"
   [[ -e "$dir" ]] && die "$dir already exists"
   mkdir -p "$dir"/{homework,notes,projects}
-  if [[ -f "$SELF_DIR/hwtemplate.typ" ]]; then
-    cp "$SELF_DIR/hwtemplate.typ" "$dir/homework/hwtemplate.typ"
+  if [[ -f "$SELF_DIR/schoolWorkTemplate.typ" ]]; then
+    cp "$SELF_DIR/schoolWorkTemplate.typ" "$dir/homework/schoolWorkTemplate.typ"
   else
-    : > "$dir/homework/hwtemplate.typ"
-    echo "hw: heads up, no hwtemplate.typ next to this script — left it empty" >&2
+    : > "$dir/homework/schoolWorkTemplate.typ"
+    echo "hw: heads up, no schoolWorkTemplate.typ next to this script — left it empty" >&2
   fi
   echo "made $dir"
 }
@@ -76,7 +63,7 @@ new_hw() {
   fi
 
   cat > "$f" <<EOF
-#import "hwtemplate.typ": *
+#import "schoolWorkTemplate.typ": *
 #show: homework.with(
   course: "${course:-$(basename "$dir")}",
   university: "${university:-$UNI}",
@@ -98,9 +85,26 @@ notes_file() {
   echo "$nf"
 }
 
+# Append lecture header formatted for today and return file path
+append_lecture_note() {
+  local dir="$1"
+  local nf
+  nf=$(notes_file "$dir")
+
+  local y m d
+  y=$(date +%Y)
+  m=$(date +%-m)
+  d=$(date +%-d)
+
+  # Append lecture macro block
+  printf '\n#lecture(title: "", date: datetime(year: %s, month: %s, day: %s))\n' "$y" "$m" "$d" >> "$nf"
+  echo "$nf"
+}
+
 pick_course() {
   find "$SCHOOL" -mindepth 1 -maxdepth 1 -type d | sort \
-    | fzf --prompt="course> " --height=50% --reverse
+    | fzf --prompt="course> " --height=50% --reverse \
+          --expect=ctrl-n --header="enter: browse    ^N: notes"
 }
 
 pick_hw() {
@@ -116,7 +120,7 @@ pick_hw() {
     raw=$(printf '%s\n%s\n' "$new" "$list" \
       | fzf --prompt="[$(basename "$dir")]> " --height=50% --reverse \
             --expect=ctrl-d,ctrl-n \
-            --header="enter: open/new   ^D: delete   ^N: notes") || return 1
+            --header="enter: open/new    ^D: delete    ^N: view notes (pdf)") || return 1
 
     key=$(sed -n 1p <<<"$raw")
     sel=$(sed -n 2p <<<"$raw")
@@ -124,7 +128,7 @@ pick_hw() {
 
     case "$key" in
       ctrl-n)
-        notes_file "$dir"
+        echo "NOTES_PDF:$(notes_file "$dir")"
         return
         ;;
       ctrl-d)
@@ -145,27 +149,138 @@ listall() {
   find "$SCHOOL" -mindepth 3 -maxdepth 3 -type f -regex '.*/homework/[0-9]+hw\.typ' | sort
 }
 
+pane_for_file() {
+  local want="hw-open:$1" id title
+  while IFS=$'\t' read -r id title; do
+    [[ "$title" == "$want" ]] && { echo "$id"; return 0; }
+  done < <(tmux list-panes -a -F "#{pane_id}"$'\t'"#{pane_title}" 2>/dev/null)
+  return 1
+}
+
+goto_pane() {
+  local pane_id="$1" sess
+  sess=$(tmux display-message -p -t "$pane_id" '#{session_name}')
+  tmux select-window -t "$pane_id"
+  tmux select-pane -t "$pane_id"
+  if [[ -z "${TMUX:-}" ]]; then
+    tmux attach-session -t "=$sess"
+  else
+    tmux switch-client -t "=$sess"
+  fi
+}
+
+open_zathura_only() {
+  local f="$1" pdf="${1%.typ}.pdf"
+  
+  if command -v typst >/dev/null 2>&1; then
+    typst compile "$f" "$pdf" >/dev/null 2>&1 || true
+  fi
+
+  if command -v zathura >/dev/null 2>&1 && [[ -f "$pdf" ]]; then
+    zathura "$pdf" >/dev/null 2>&1 &
+  else
+    echo "hw: could not compile or open zathura for $f" >&2
+  fi
+}
+
 open_typ() {
   local f="$1" pdf="${1%.typ}.pdf"
 
+  [[ -n "${TMUX_PANE:-}" ]] && tmux select-pane -t "$TMUX_PANE" -T "hw-open:$f" 2>/dev/null
+
   if [[ "$AUTOSTART" != 1 ]]; then
     "$ED" "$f"
+  else
+    if command -v zathura >/dev/null 2>&1; then
+      ( local t=0
+        while [[ ! -s "$pdf" && $t -lt 150 ]]; do sleep 0.1; t=$((t + 1)); done
+        [[ -s "$pdf" ]] && zathura --fork "$pdf" >/dev/null 2>&1
+      ) &
+      disown
+    fi
+
+    if command -v typst >/dev/null 2>&1; then
+      tmux split-window -h -d -l "${SPLIT_PCT}%" typst watch "$f"
+    fi
+
+    if [[ "$(basename "$ED")" == vim || "$(basename "$ED")" == nvim ]]; then
+      # If opening main notes file, position cursor between title quotes on the last line
+      if [[ "$f" == */notes/main.typ ]]; then
+        "$ED" "$f" -c "set notitle" -c 'normal G$' -c 'call search("title: \"", "b")' -c 'normal f"'
+      else
+        "$ED" "$f" -c "set notitle"
+      fi
+    else
+      "$ED" "$f"
+    fi
+  fi
+
+  [[ -n "${TMUX_PANE:-}" ]] && tmux select-pane -t "$TMUX_PANE" -T "" 2>/dev/null
+}
+
+hydrate() {
+  local sess="$1" dir="$2"
+  if [[ -f "$dir/.tmux-sessionizer" ]]; then
+    tmux send-keys -t "=$sess:" "source $(printf '%q' "$dir/.tmux-sessionizer")" Enter
+  elif [[ -f "$HOME/.tmux-sessionizer" ]]; then
+    tmux send-keys -t "=$sess:" "source $(printf '%q' "$HOME/.tmux-sessionizer")" Enter
+  fi
+}
+
+open_in_tmux() {
+  local dir="$1" f="$2" name cmd is_new=0
+  name=$(basename -- "$dir" | tr . _)
+
+  if tmux has-session -t "=$name" 2>/dev/null; then
+    tmux new-window -t "=$name" -c "$dir"
+  else
+    tmux new-session -d -s "$name" -c "$dir"
+    is_new=1
+  fi
+
+  [[ "$is_new" == 1 ]] && hydrate "$name" "$dir"
+
+  cmd="SCHOOL_DIR=$(printf '%q' "$SCHOOL") EDITOR=$(printf '%q' "$ED")"
+  cmd="$cmd HW_AUTOSTART=$AUTOSTART HW_SPLIT_PCT=$(printf '%q' "$SPLIT_PCT")"
+  cmd="$cmd HW_UNIVERSITY=$(printf '%q' "$UNI") HW_AUTHOR=$(printf '%q' "$AUTHOR")"
+  cmd="$cmd $(printf '%q' "$SELF_PATH") --open-file $(printf '%q' "$f")"
+  tmux send-keys -t "=$name:" "$cmd" Enter
+
+  if [[ -z "${TMUX:-}" ]]; then
+    tmux attach-session -t "=$name"
+  else
+    tmux switch-client -t "=$name"
+  fi
+}
+
+live_sessions() {
+  local name course open
+  while IFS= read -r name; do
+    course="$SCHOOL/$name"
+    [[ -d "$course" ]] || continue
+    open=$(tmux list-panes -a -F "#{session_name} #{pane_title}" 2>/dev/null \
+      | awk -v s="$name" '$1==s && $0 ~ /hw-open:/ {print; exit}')
+    if [[ -n "$open" ]]; then
+      echo "$name  (open: ${open#*hw-open:})"
+    else
+      echo "$name"
+    fi
+  done < <(tmux list-sessions -F "#{session_name}" 2>/dev/null)
+}
+
+deliver() {
+  local course_dir="$1" target="$2" pane_id
+  
+  if [[ "$target" == NOTES_PDF:* ]]; then
+    open_zathura_only "${target#NOTES_PDF:}"
     return
   fi
 
-  if command -v zathura >/dev/null 2>&1; then
-    ( local t=0
-      while [[ ! -s "$pdf" && $t -lt 150 ]]; do sleep 0.1; t=$((t + 1)); done
-      [[ -s "$pdf" ]] && zathura --fork "$pdf" >/dev/null 2>&1
-    ) &
-    disown
+  if pane_id=$(pane_for_file "$target"); then
+    goto_pane "$pane_id"
+  else
+    open_in_tmux "$course_dir" "$target"
   fi
-
-  if command -v typst >/dev/null 2>&1; then
-    tmux split-window -h -d -l "${SPLIT_PCT}%" typst watch "$f"
-  fi
-
-  "$ED" "$f"
 }
 
 [[ "${1:-}" == "--no-watch" ]] && { AUTOSTART=0; shift; }
@@ -173,16 +288,22 @@ open_typ() {
 case "${1:-}" in
   new-course) scaffold "${2:-}"; exit ;;
   list) listall; exit ;;
-  -h|--help) sed -n '2,14p' "${BASH_SOURCE[0]}"; exit ;;
+  sessions) live_sessions; exit ;;
+  --open-file) open_typ "${2:?missing file}"; exit ;;
+  -h|--help) sed -n '2,24p' "${BASH_SOURCE[0]}"; exit ;;
 esac
 
-[[ -n "${TMUX:-}" ]] || die "run this inside a tmux session"
-
-course_dir=$(in_course) || course_dir=$(pick_course) || exit 0
+# Always show course picker regardless of $PWD location
+raw=$(pick_course) || exit 0
+key=$(sed -n 1p <<<"$raw")
+course_dir=$(sed -n 2p <<<"$raw")
 [[ -n "$course_dir" ]] || exit 0
 
-target=$(pick_hw "$course_dir") || exit 0
-[[ -n "$target" ]] || exit 0
+if [[ "$key" == "ctrl-n" ]]; then
+  target=$(append_lecture_note "$course_dir")
+else
+  target=$(pick_hw "$course_dir") || exit 0
+  [[ -n "$target" ]] || exit 0
+fi
 
-echo "opening $target"
-open_typ "$target"
+deliver "$course_dir" "$target"

@@ -36,6 +36,7 @@
       set -g window-status-separator ""
       set -g window-status-format " #I "
       set -g window-status-current-format " #I "
+      set -g renumber-windows on
       bind-key h select-pane -L
       bind-key j select-pane -D
       bind-key k select-pane -U
