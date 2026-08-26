@@ -6,6 +6,11 @@
     # most settings are documented in the appendix
     settings.vim = {
       keymaps = import ./keymaps.nix;
+      snippets.luasnip = {
+        enable = true;
+        setupOpts.enable_autosnippets = true;
+        customSnippets.snipmate = import ./snippets.nix;
+      };
       globals.mapleader = " ";
       lineNumberMode = "relNumber";
       viAlias = true;
