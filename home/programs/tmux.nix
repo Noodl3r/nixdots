@@ -36,7 +36,12 @@
       set -g window-status-separator ""
       set -g window-status-format " #I "
       set -g window-status-current-format " #I "
+
       set -g renumber-windows on
+      set -gq allow-passthrough on
+      set -g visual-activity off
+      set-option -g focus-events on
+
       bind-key h select-pane -L
       bind-key j select-pane -D
       bind-key k select-pane -U

@@ -29,6 +29,8 @@
       visuals = {
         rainbow-delimiters.enable = true;
         indent-blankline.enable = true;
+        cinnamon-nvim.enable = true;
+        highlight-undo.enable = true;
       };
       spellcheck = {
         enable = true;
@@ -52,9 +54,10 @@
       };
       treesitter = {
         enable = true;
-        #context.enable = true;
+        # The dumb thing at the top of the screen.
+        # context.enable = true;
         highlight.enable = true;
-        #indent.enable = true;
+        indent.enable = true;
         autotagHtml = true;
       };
       #debugger = {
@@ -85,12 +88,13 @@
           format.enable = true;
           lsp.enable = true;
         };
-        typst = {
-          enable = true;
-          extensions.typst-preview-nvim.setupOpts = {
-            invert_colors = "auto";
-          };
-        };
+        # typst = {
+        #   enable = true;
+        #   lsp.enable = false;
+        #   extensions.typst-preview-nvim.setupOpts = {
+        #     invert_colors = "auto";
+        #   };
+        # };
       };
       diagnostics = {
         enable = true;
@@ -98,7 +102,14 @@
         config.virtual_text = true;
       };
       autocomplete = {
-        blink-cmp.enable = true;
+        blink-cmp = {
+          enable = true;
+          friendly-snippets.enable = true;
+          setupOpts = {
+            keymap.preset = "super-tab";
+            cmdline.keymap.preset = "super-tab";
+          };
+        };
       };
       telescope = {
         enable = true;
@@ -117,6 +128,13 @@
       ui = {
         borders.enable = true;
         colorizer.enable = true;
+        smartcolumn = {
+          enable = true;
+          setupOpts.custom_colorcolumn = {
+            c = "80";
+            cpp = "80";
+          };
+        };
       };
       terminal = {
         toggleterm = {

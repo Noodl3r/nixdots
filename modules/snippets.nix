@@ -1,13 +1,13 @@
 {
-  typ = [
+  typst = [
     {
       trigger = "qo";
-      body = "\$ $1 \$";
+      body = "\\$ $1 \\$";
     }
 
     {
       trigger = "qi";
-      body = "\$$1\$";
+      body = "\\$$1\\$";
     }
   ];
 }
