@@ -10,6 +10,9 @@
       url = "github:nix-community/home-manager/release-26.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixneovimplugins = {
+      url = "github:NixNeovim/NixNeovimPlugins";
+    };
   };
 
   outputs = {
@@ -17,13 +20,14 @@
     nixpkgs,
     nvf,
     home-manager,
+    nixneovimplugins,
     ...
   }: let
     mkHost = host:
       nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
-          inherit host;
+          inherit host nixneovimplugins;
         };
         modules = [
           nvf.nixosModules.default

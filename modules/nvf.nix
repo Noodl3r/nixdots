@@ -1,5 +1,9 @@
 # https://nvf.notashelf.dev/
-{pkgs, ...}: {
+{
+  pkgs,
+  nixneovimplugins,
+  ...
+}: {
   programs.nvf = {
     enable = true;
     # Your settings need to go into the settings attribute set
@@ -152,6 +156,15 @@
       '';
       luaConfigRC = {
         typst = builtins.readFile ./lua/typst.lua;
+      };
+      lazy.plugins = {
+        neogen-danymat = {
+          package = nixneovimplugins.packages.${pkgs.system}.neogen-danymat;
+          setupModule = "neogen";
+          setupOpts = {
+            snippet_engine = "luasnip";
+          };
+        };
       };
     };
   };
