@@ -6,5 +6,9 @@
     ".config/kitty".source = ../config/kitty;
     ".config/picom".source = ../config/picom;
     ".vimrc".source = ../config/vim/vimrc;
+    ".vim" = {
+      source = ../config/vim;
+      recursive = true;
+    };
   };
 }
