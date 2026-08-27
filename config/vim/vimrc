@@ -25,7 +25,7 @@ set nobackup
 set nowritebackup
 set noswapfile
 
-colorscheme zaibatsu
+colorscheme industry
 
 " Custom cursors for insert and etc. 
 let &t_EI = "\e[2 q"
