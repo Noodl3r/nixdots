@@ -157,14 +157,8 @@
       luaConfigRC = {
         typst = builtins.readFile ./lua/typst.lua;
       };
-      lazy.plugins = {
-        neogen-danymat = {
-          package = nixneovimplugins.packages.${pkgs.system}.neogen-danymat;
-          setupModule = "neogen";
-          setupOpts = {
-            snippet_engine = "luasnip";
-          };
-        };
+      lazy.plugins = import ./plugins.nix {
+        inherit pkgs nixneovimplugins;
       };
     };
   };
