@@ -26,6 +26,7 @@
     entr
     tor-browser
     qbittorrent
+    poppler-utils
     # Unfree trash
     discord
     spotify

@@ -109,4 +109,11 @@
     silent = true;
     action = ":noh<CR>";
   }
+
+  {
+    key = "<leader>C";
+    mode = "n";
+    silent = true;
+    action = "Neogen";
+  }
 ]
