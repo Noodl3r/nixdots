@@ -111,7 +111,7 @@
   }
 
   {
-    key = "<leader>C";
+    key = "<leader>ng";
     mode = "n";
     silent = true;
     action = "Neogen";

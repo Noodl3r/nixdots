@@ -29,6 +29,7 @@
         wrap = true;
         linebreak = true;
         breakindent = true;
+        undofile = true;
       };
       visuals = {
         rainbow-delimiters.enable = true;
