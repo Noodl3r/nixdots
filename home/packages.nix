@@ -19,6 +19,7 @@
     typst
     # utilities
     flameshot
+    btop
     bunnyfetch
     mpv
     smartmontools

@@ -65,7 +65,7 @@
     key = "<leader>s";
     mode = "n";
     silent = true;
-    action = ":%s/\\<<C-r><C-w>\\>//g<Left><Left>";
+    action = ":%s/<C-r><C-w>//g<Left><Left>";
   }
 
   {
