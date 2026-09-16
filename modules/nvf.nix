@@ -83,7 +83,12 @@
           extraDiagnostics.enable = false;
         };
         cmake.enable = true;
-        java.enable = true;
+        java = {
+          enable = true;
+          extensions."gradle-nvim".enable = true;
+          format.enable = false;
+          lsp.enable = true;
+        };
         python.enable = true;
         rust.enable = true;
         docker.enable = true;

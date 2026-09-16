@@ -49,14 +49,14 @@
 
   {
     key = "<Up>";
-    mode = "i";
+    mode = ["i" "n"];
     silent = true;
     action = "<C-o>gk";
   }
 
   {
     key = "<Down>";
-    mode = "i";
+    mode = ["i" "n"];
     silent = true;
     action = "<C-o>gj";
   }
@@ -115,5 +115,13 @@
     mode = "n";
     silent = true;
     action = "Neogen";
+  }
+  {
+    key = "<leader>ca";
+    mode = ["n" "x"];
+    silent = true;
+    action = "function()
+           require('tiny-code-action').code_action()
+            end";
   }
 ]

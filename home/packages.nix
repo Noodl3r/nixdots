@@ -19,6 +19,7 @@
     typst
     # utilities
     flameshot
+    gimp
     btop
     bunnyfetch
     mpv
@@ -28,9 +29,18 @@
     tor-browser
     qbittorrent
     poppler-utils
+    qemu
+    wireshark
+    weechat
     # Unfree trash
     discord
     spotify
     google-chrome
+    jetbrains.idea
+
+    # Inkscape with it's textext extension
+    (inkscape-with-extensions.override {
+      inkscapeExtensions = with inkscape-extensions; [textext];
+    })
   ];
 }

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-TEMPLATES="$HOME/dev/dev-shells/"
+REPO="$HOME/dev/dev-shells"
 
 choice=$(
-    nix flake show --json "$repo" \
+    nix flake show --json "$REPO" \
         | jq -r '.templates | keys[]' \
         | sort \
         | fzf --prompt="Template: "
@@ -12,14 +12,25 @@ choice=$(
 
 [[ -n "$choice" ]]
 
-nix flake init --template "$repo#$choice"
+echo "Initializing $choice dev shell..."
+
+nix flake init --template "$REPO#$choice"
+
 direnv allow
 
 if [[ "$PWD" == "$HOME" ]]; then
     echo "Refusing to initialize git repo in HOME"
     exit 1
 fi
+
+if [[ "$choice" == "c" ]]; then
+    mkdir -p build
+    cd build
+    cmake .. && make -j8 && ./project 
+    cd ..
+    ln -sf compile_commands.json build/compile_commands.json
+fi 
+
 git init
 git add .
 git commit -m "Initial commit"
-
