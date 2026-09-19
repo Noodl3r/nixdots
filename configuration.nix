@@ -10,6 +10,10 @@
     ./modules/nvf.nix
   ];
   boot = {
+    extraModprobeConfig = ''
+      options snd-hda-intel model=thinkpad
+    '';
+
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
@@ -98,6 +102,7 @@
 
   hardware = {
     bluetooth.enable = true;
+    enableAllFirmware = true;
   };
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
