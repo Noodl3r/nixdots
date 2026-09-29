@@ -152,9 +152,6 @@
           lazygit.enable = true;
         };
       };
-      git = {
-        enable = true;
-      };
       luaConfigPost = ''
         vim.cmd.colorscheme("industry")
         vim.opt.cmdheight = 0
