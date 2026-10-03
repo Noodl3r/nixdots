@@ -8,7 +8,7 @@
       };
       init.defaultBranch = "main";
       push = {autoSetupRemote = true;};
-      pull = {merge = true;};
+      pull = {rebase = false;};
     };
   };
 }
