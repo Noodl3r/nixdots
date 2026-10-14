@@ -124,6 +124,13 @@
            require('tiny-code-action').code_action()
             end";
   }
+  {
+    key = "<leader>d";
+    mode = ["n"];
+    silent = true;
+    lua = true;
+    action = "vim.diagnostic.open_float";
+  }
   # Better indenting :
   {
     key = "<";
