@@ -19,7 +19,16 @@
       lineNumberMode = "relNumber";
       viAlias = true;
       vimAlias = false;
-      autopairs.nvim-autopairs.enable = true;
+      autopairs.nvim-autopairs = {
+        enable = true;
+        setupOpts = {
+          disable_filetype = ["TelescopePrompt"];
+          fast_wrap = {
+            map = "<M-e>";
+            end_key = "$";
+          };
+        };
+      };
       opts = {
         expandtab = true;
         tabstop = 4;
@@ -163,6 +172,7 @@
       lazy.plugins = import ./plugins.nix {
         inherit pkgs nixneovimplugins;
       };
+      git.vim-fugitive.enable = true;
     };
   };
 }

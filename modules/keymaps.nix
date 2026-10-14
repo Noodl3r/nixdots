@@ -124,4 +124,15 @@
            require('tiny-code-action').code_action()
             end";
   }
+  # Better indenting :
+  {
+    key = "<";
+    action = "<gv";
+    mode = "v";
+  }
+  {
+    key = ">";
+    action = ">gv";
+    mode = "v";
+  }
 ]
