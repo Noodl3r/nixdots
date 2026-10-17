@@ -32,6 +32,7 @@
     qemu
     wireshark
     weechat
+    autotiling
     # Unfree trash
     discord
     spotify

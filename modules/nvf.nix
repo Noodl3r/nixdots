@@ -143,6 +143,7 @@
         oil-nvim.gitStatus.enable = true;
         diffview-nvim.enable = true;
         surround.enable = true;
+        undotree.enable = true;
       };
       ui = {
         borders.enable = true;
