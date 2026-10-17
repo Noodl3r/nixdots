@@ -74,6 +74,7 @@
         indent.enable = true;
         autotagHtml = true;
       };
+
       #debugger = {
       #nvim-dap = {
       #enable = true;
@@ -173,7 +174,16 @@
       lazy.plugins = import ./plugins.nix {
         inherit pkgs nixneovimplugins;
       };
-      git.vim-fugitive.enable = true;
+      git = {
+        gitsigns = {
+          enable = true;
+          setupOpts = {
+            numhl = true;
+          };
+        };
+        vim-fugitive.enable = true;
+        hunk-nvim.enable = true;
+      };
     };
   };
 }
