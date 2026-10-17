@@ -146,6 +146,7 @@
         surround.enable = true;
         undotree.enable = true;
       };
+
       ui = {
         borders.enable = true;
         colorizer.enable = true;
@@ -157,12 +158,15 @@
           };
         };
       };
+
       terminal = {
         toggleterm = {
           enable = true;
           lazygit.enable = true;
+          mappings.open = "<leader>T";
         };
       };
+
       luaConfigPost = ''
         vim.cmd.colorscheme("industry")
         vim.opt.cmdheight = 0
