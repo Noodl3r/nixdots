@@ -140,8 +140,14 @@
         };
       };
       utility = {
-        oil-nvim.enable = true;
-        oil-nvim.gitStatus.enable = true;
+        oil-nvim = {
+          enable = true;
+          gitStatus.enable = true;
+          setupOpts = {
+            skip_confirm_for_simple_edits = true;
+            show_hidden = true;
+          };
+        };
         diffview-nvim.enable = true;
         surround.enable = true;
         undotree.enable = true;

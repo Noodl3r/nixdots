@@ -79,6 +79,7 @@
       xinit
       brightnessctl
       pulseaudio
+      bluez
       fish
       ripgrep
       bat
@@ -103,7 +104,12 @@
   hardware = {
     bluetooth.enable = true;
     enableAllFirmware = true;
+    logitech.wireless = {
+      enable = true;
+      enableGraphical = true;
+    };
   };
+
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
     auto-optimise-store = true;
