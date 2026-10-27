@@ -38,6 +38,7 @@
     spotify
     google-chrome
     jetbrains.idea
+    zoom
 
     # Inkscape with it's textext extension
     (inkscape-with-extensions.override {
