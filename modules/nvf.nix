@@ -174,9 +174,22 @@
       };
 
       luaConfigPost = ''
-        vim.cmd.colorscheme("industry")
-        vim.opt.cmdheight = 0
-        vim.opt.laststatus = 0
+          vim.cmd.colorscheme("industry")
+          vim.opt.cmdheight = 0
+          vim.opt.laststatus = 0
+          vim.api.nvim_create_autocmd("LspAttach", {
+          callback = function(args)
+            vim.schedule(function()
+              vim.keymap.set({ "n", "x" }, "<leader>ca", function()
+                require("tiny-code-action").code_action()
+              end, {
+                buffer = args.buf,
+                silent = true,
+                desc = "Tiny code action",
+              })
+            end)
+          end,
+        })
       '';
       luaConfigRC = {
         typst = builtins.readFile ./lua/typst.lua;

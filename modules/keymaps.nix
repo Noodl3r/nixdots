@@ -116,14 +116,7 @@
     silent = true;
     action = "Neogen";
   }
-  {
-    key = "<leader>ca";
-    mode = ["n" "x"];
-    silent = true;
-    action = "function()
-           require('tiny-code-action').code_action()
-            end";
-  }
+
   {
     key = "<leader>d";
     mode = ["n"];

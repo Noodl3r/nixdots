@@ -15,6 +15,7 @@
     setupModule = "tiny-code-action";
     setupOpts = {
       dependencies = "nvim-telescope/telescope.nvim";
+      picker = "telescope";
       event = "LspAttach";
       opts.backend = "vim";
     };
