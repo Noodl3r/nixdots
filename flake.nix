@@ -13,6 +13,9 @@
     nixneovimplugins = {
       url = "github:NixNeovim/NixNeovimPlugins";
     };
+    pi = {
+      url = "github:earendil-works/pi/stable";
+    };
   };
 
   outputs = {
@@ -21,6 +24,7 @@
     nvf,
     home-manager,
     nixneovimplugins,
+    pi,
     ...
   }: let
     mkHost = host:
@@ -37,6 +41,9 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              extraSpecialArgs = {
+                inherit pi;
+              };
               users.noodl3 = import ./home.nix;
               backupFileExtension = "backup";
             };
