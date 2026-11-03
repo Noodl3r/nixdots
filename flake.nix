@@ -6,12 +6,18 @@
       url = "github:NotAShelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    home-manager = {
-      url = "github:nix-community/home-manager/release-26.05";
-      inputs.nixpkgs.follows = "nixpkgs";
+    nix-doom-emacs-unstraightened = {
+      url = "github:marienz/nix-doom-emacs-unstraightened";
+      inputs = {
+        doomdir.url = "./doom";
+      };
     };
     nixneovimplugins = {
       url = "github:NixNeovim/NixNeovimPlugins";
+    };
+    home-manager = {
+      url = "github:nix-community/home-manager/release-26.05";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     pi = {
       url = "github:earendil-works/pi/stable";
@@ -22,6 +28,7 @@
     self,
     nixpkgs,
     nvf,
+    nix-doom-emacs-unstraightened,
     home-manager,
     nixneovimplugins,
     pi,
@@ -42,6 +49,7 @@
               useGlobalPkgs = true;
               useUserPackages = true;
               extraSpecialArgs = {
+                inherit nix-doom-emacs-unstraightened;
                 inherit pi;
               };
               users.noodl3 = import ./home.nix;
