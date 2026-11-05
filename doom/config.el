@@ -16,6 +16,19 @@
 
 ;; Reloading changes from outside emacs.
 (global-auto-revert-mode 1)
+ 
+;; cursor positons between sessions / other similar stuff
+(save-place-mode 1)
+(recentf-mode 1)
+(savehist-mode 1)
+(winner-mode 1)
+(setq scroll-margin 6
+ scroll-conservatively 101
+ scroll-preserve-screen-position t)
+
+;; Whitespace :
+(add-hook 'before-save-hook #'delete-trailing-whitespace)
+
 
 ;; Dired for oil like effect
 (map! :leader "TAB" #'dired-jump)

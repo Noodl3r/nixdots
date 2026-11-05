@@ -13,6 +13,7 @@
 
        :editor
        (evil +everywhere)
+       (format +onsave)
 
        :emacs
        undo
