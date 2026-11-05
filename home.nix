@@ -21,5 +21,6 @@
     ./home/programs/firefox.nix
     ./home/programs/tmux.nix
     ./home/programs/zathura.nix
+    ./home/programs/doom-emacs.nix
   ];
 }
