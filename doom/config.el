@@ -4,8 +4,8 @@
                  :size 22
                  :weight 'regular))
 
-;; Potential themes : modus-vivendi, ir-black
-(setq doom-theme 'modus-vivendi)
+;; Potential themes : modus-vivendi, ir-black, haki
+(setq doom-theme 'haki)
 
 (setq select-enable-clipboard t)
 (setq select-enable-primary t)
