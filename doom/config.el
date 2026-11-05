@@ -21,7 +21,6 @@
 (save-place-mode 1)
 (recentf-mode 1)
 (savehist-mode 1)
-(winner-mode 1)
 (setq scroll-margin 6
       scroll-conservatively 101
       scroll-preserve-screen-position t)
@@ -29,11 +28,20 @@
 ;; Whitespace :
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
 
+;; Window stuff.
+(winner-mode 1)
+(after! evil
+  (setq evil-split-window-below t
+        evil-vsplit-window-right t))
 
 ;; Dired for oil like effect
 (map! :leader "TAB" #'dired-jump)
 ;; The leader save I'm used to from vim
 (map! :leader "W" #'save-buffer)
+;; Deleting windows
+(map! :leader
+      "w x" #'delete-window
+      "w d" nil)
 
 
 ;; Patching for gcc etc.

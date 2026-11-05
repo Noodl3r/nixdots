@@ -88,6 +88,9 @@
       xz
       p7zip
       file
+      man
+      man-pages
+      man-pages-posix
     ];
 
     variables = {
