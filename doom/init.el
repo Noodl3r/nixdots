@@ -10,6 +10,7 @@
        ophints
        (popup +defaults)
        window-select
+       vc-gutter
 
        :editor
        (evil +everywhere)
