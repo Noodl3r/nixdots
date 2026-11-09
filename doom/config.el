@@ -14,11 +14,18 @@
 ;; Line numbers :
 (setq display-line-numbers-type 'relative)
 
+;; Removing stupid splash on start up:
+(remove-hook '+dashboard-functions #'+dashboard-widget-banner)
+
 ;; Reloading changes from outside emacs.
 (global-auto-revert-mode 1)
 
 ;; Turning off the highlighting of the line
 (global-hl-line-mode 0)
+
+;; I like line wrapping :(
+(add-hook 'text-mode-hook #'visual-line-mode)
+(add-hook 'prog-mode-hook #'visual-line-mode)
 
 ;; cursor positons between sessions / other similar stuff
 (save-place-mode 1)
@@ -30,6 +37,10 @@
 
 ;; Whitespace :
 (add-hook 'before-save-hook #'delete-trailing-whitespace)
+;; Fixing the stupid i3 problem
+(add-hook 'window-size-change-functions
+          (lambda (frame)
+            (redraw-frame frame)))
 
 ;; Window stuff.
 (winner-mode 1)
@@ -43,11 +54,14 @@
 (map! :leader
       "w x" #'delete-window
       "w d" nil)
-
+;; The arrow thing I enjoy
+(map! :nvi "<down>" #'evil-next-visual-line
+      :nvi "<up>"   #'evil-previous-visual-line)
+(map! :nvi "C-l"  #'flyspell-auto-correct-previous-word)
 
 ;; Patching for gcc etc.
 (after! eglot
-  (setq eglot-send-changes-idle-time 1.0)
+  (setq eglot-send-changes-idle-time 0.5)
   (add-to-list 'eglot-server-programs
                '((c-mode c-ts-mode c++-mode c++-ts-mode)
                  . ("clangd"
@@ -57,8 +71,8 @@
 ;; Company config
 (after! company
   (setq company-idle-delay 0.2
-        company-minimum-prefix-length 2
-        company-tooltip-limit 8
+        company-minimum-prefix-length 1
+        company-tooltip-limit 5
         company-selection-wrap-around t))
 
 

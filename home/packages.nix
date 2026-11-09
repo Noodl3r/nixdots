@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   home.packages = with pkgs; [
     vim-full
     helix
@@ -33,16 +33,15 @@
     wireshark
     weechat
     autotiling
+    ispell
+    nixd
+    nixfmt
+
     # Unfree trash
     discord
     spotify
     google-chrome
-    jetbrains.idea
     zoom
 
-    # Inkscape with it's textext extension
-    (inkscape-with-extensions.override {
-      inkscapeExtensions = with inkscape-extensions; [textext];
-    })
   ];
 }

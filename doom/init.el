@@ -11,6 +11,7 @@
        (popup +defaults)
        window-select
        vc-gutter
+       workspaces
 
        :editor
        (evil +everywhere)
@@ -18,7 +19,12 @@
 
        :emacs
        undo
-       dired
+       (dired +dirvish)
+
+       :checkers
+       syntax
+       (spell +flyspell)
+       grammar
 
        :term
        eshell
@@ -31,12 +37,18 @@
        :lang
        emacs-lisp
        (cc +lsp +tree-sitter)
+       (go +lsp)
+       (java +lsp +meghanada)
+       markdown
+       (python +lsp)
+       (sh +lsp)
+       lean
+
        (:if (featurep 'unstraightened) (nix +lsp))
 
        :tools
        direnv
        magit
-       (sh +lsp)
        (lsp +eglot)
 
 
