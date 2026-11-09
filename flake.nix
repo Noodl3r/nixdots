@@ -10,10 +10,12 @@
       url = "github:marienz/nix-doom-emacs-unstraightened";
       inputs = {
         doomdir.url = "./doom";
+        nixpkgs.follows = "nixpkgs";
       };
     };
     nixneovimplugins = {
       url = "github:NixNeovim/NixNeovimPlugins";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
     home-manager = {
       url = "github:nix-community/home-manager/release-26.05";
@@ -21,6 +23,7 @@
     };
     pi = {
       url = "github:earendil-works/pi/stable";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 

@@ -22,6 +22,7 @@
       check = "nix flake check ~/dotfiles";
       lg = "lazygit";
       dl = "cd ~/Downloads && ls -hatrs";
+      p = "direnv exec . pi";
     };
   };
 }

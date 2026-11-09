@@ -43,7 +43,6 @@
       set-option -g focus-events on
 
       set -g extended-keys on
-      set -g extened-keys-format csi-u
 
       bind-key h select-pane -L
       bind-key j select-pane -D
