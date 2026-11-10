@@ -19,7 +19,7 @@
 
 ;; Whitespace :
 (setq whitespace-style '(face indentation trailing lines-tail))
-(global-whitespace-mode t)
+;; (global-whitespace-mode t) slow?
 
 ;; Removing stupid splash on start up:
 (remove-hook '+dashboard-functions #'+dashboard-widget-banner)
