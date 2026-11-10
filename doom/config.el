@@ -9,10 +9,15 @@
 
 (setq select-enable-clipboard t)
 (setq select-enable-primary t)
+(setq evil-want-fine-undo t)
 
 
 ;; Line numbers :
 (setq display-line-numbers-type 'relative)
+
+;; Whitespace :
+(setq whitespace-style '(face indentation trailing lines-tail))
+(global-whitespace-mode t)
 
 ;; Removing stupid splash on start up:
 (remove-hook '+dashboard-functions #'+dashboard-widget-banner)
@@ -85,3 +90,10 @@
 ;; Compilation stuff
 (setq compilation-scroll-output 'first-error)
 (setq compilation-ask-about-save nil)
+
+;; Getting emacs to just close
+(setq confirm-kill-emacs nil)
+
+;; Magit stuff
+(setq magit-prefer-remote-upstream t)
+(setq forge-topic-list-limit '(30 . 6))

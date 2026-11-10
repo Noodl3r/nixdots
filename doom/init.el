@@ -8,14 +8,17 @@
        modeline
        nav-flash
        ophints
-       (popup +defaults)
+       (popup +all +defaults)
        window-select
        vc-gutter
        workspaces
+       indent-guides
 
        :editor
        (evil +everywhere)
        (format +onsave)
+       multiple-cursors
+       word-wrap
 
        :emacs
        undo
@@ -27,7 +30,6 @@
        grammar
 
        :term
-       eshell
        vterm
 
        :os
