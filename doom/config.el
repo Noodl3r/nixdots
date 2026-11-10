@@ -97,3 +97,8 @@
 ;; Magit stuff
 (setq magit-prefer-remote-upstream t)
 (setq forge-topic-list-limit '(30 . 6))
+
+
+;; Making vim s/S work normally instead of the weird snipe thing
+(after! evil-snipe
+  (evil-snip-mode -1))
