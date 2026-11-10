@@ -40,7 +40,7 @@
        emacs-lisp
        (cc +lsp +tree-sitter)
        (go +lsp)
-       (java +lsp +meghanada)
+       (java +lsp)
        markdown
        (python +lsp)
        (sh +lsp)

@@ -14,6 +14,8 @@
 
 ;; Line numbers :
 (setq display-line-numbers-type 'relative)
+;; I hate the indacator at the bottom
+(setq-default indicate-empty-lines nil)
 
 ;; Whitespace :
 (setq whitespace-style '(face indentation trailing lines-tail))
@@ -102,3 +104,10 @@
 ;; Making vim s/S work normally instead of the weird snipe thing
 (after! evil-snipe
   (evil-snip-mode -1))
+
+
+;; Making ElDoc shutup
+;;Keep ElDoc strictly to a single line in the minibuffer
+(setq eldoc-echo-area-use-multiline-p nil)
+(setq eldoc-idle-delay 0.3)
+(setq lsp-idle-delay 0.2)
