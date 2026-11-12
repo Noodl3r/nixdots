@@ -27,8 +27,9 @@
 ;; Reloading changes from outside emacs.
 (global-auto-revert-mode 1)
 
-;; Turning off the highlighting of the line
+;; Turning off the highlighting of the line via fighting with
 (global-hl-line-mode -1)
+(setq hl-line-mode nil)
 
 ;; I like line wrapping :(
 (add-hook 'text-mode-hook #'visual-line-mode)
