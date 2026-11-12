@@ -10,7 +10,7 @@
        ophints
        (popup +all +defaults)
        window-select
-       vc-gutter
+       (vc-gutter +pretty)
        workspaces
        indent-guides
 
