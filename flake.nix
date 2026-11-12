@@ -9,7 +9,7 @@
     nix-doom-emacs-unstraightened = {
       url = "github:marienz/nix-doom-emacs-unstraightened";
       inputs = {
-        # doomdir.url = "./doom";
+        doomdir.url = "./doom";
         nixpkgs.follows = "nixpkgs";
       };
     };
@@ -27,44 +27,48 @@
     };
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    nvf,
-    nix-doom-emacs-unstraightened,
-    home-manager,
-    nixneovimplugins,
-    pi,
-    ...
-  }: let
-    mkHost = host:
-      nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = {
-          inherit host nixneovimplugins;
-        };
-        modules = [
-          nvf.nixosModules.default
-          ./configuration.nix
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = {
-                inherit nix-doom-emacs-unstraightened;
-                inherit pi;
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nvf,
+      nix-doom-emacs-unstraightened,
+      home-manager,
+      nixneovimplugins,
+      pi,
+      ...
+    }:
+    let
+      mkHost =
+        host:
+        nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = {
+            inherit host nixneovimplugins;
+          };
+          modules = [
+            nvf.nixosModules.default
+            ./configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                extraSpecialArgs = {
+                  inherit nix-doom-emacs-unstraightened;
+                  inherit pi;
+                };
+                users.noodl3 = import ./home.nix;
+                backupFileExtension = "backup";
               };
-              users.noodl3 = import ./home.nix;
-              backupFileExtension = "backup";
-            };
-          }
-        ];
+            }
+          ];
+        };
+    in
+    {
+      nixosConfigurations = {
+        multivac = mkHost "multivac";
+        minivac = mkHost "minivac";
       };
-  in {
-    nixosConfigurations = {
-      multivac = mkHost "multivac";
-      minivac = mkHost "minivac";
     };
-  };
 }

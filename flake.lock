@@ -10,9 +10,7 @@
         "path": "./doom",
         "type": "path"
       },
-      "parent": [
-        "nix-doom-emacs-unstraightened"
-      ]
+      "parent": []
     },
     "doomemacs": {
       "flake": false,
