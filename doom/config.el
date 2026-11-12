@@ -5,7 +5,7 @@
                  :weight 'regular))
 
 ;; Potential themes : modus-vivendi, ir-black, haki
-(setq doom-theme 'haki)
+(setq doom-theme 'temple-dark)
 
 (setq select-enable-clipboard t)
 (setq select-enable-primary t)
@@ -28,7 +28,7 @@
 (global-auto-revert-mode 1)
 
 ;; Turning off the highlighting of the line
-(global-hl-line-mode 0)
+(global-hl-line-mode -1)
 
 ;; I like line wrapping :(
 (add-hook 'text-mode-hook #'visual-line-mode)
@@ -156,3 +156,13 @@ Runs in the file's own directory, so imports relative to it resolve."
 ;; Magit stuff
 (setq magit-prefer-remote-upstream t)
 (setq forge-topic-list-limit '(30 . 6))
+
+
+;; Temple colors
+(after! temple-os-theme
+  (custom-theme-set-faces
+   'temple-os
+   '(eglot-semantic-property
+     ((t (:inherit font-lock-variable-name-face))))
+   '(font-lock-property-use-face
+     ((t (:inherit font-lock-variable-name-face))))))
