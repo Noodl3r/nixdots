@@ -51,6 +51,7 @@
        :tools
        direnv
        magit
+       pdf
        (lsp +eglot)
 
 

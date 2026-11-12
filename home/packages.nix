@@ -17,6 +17,7 @@
     jq
     i3-auto-layout
     typst
+    typstyle
     # utilities
     flameshot
     gimp

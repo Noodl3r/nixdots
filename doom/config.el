@@ -32,6 +32,7 @@
 
 ;; I like line wrapping :(
 (add-hook 'text-mode-hook #'visual-line-mode)
+(add-hook 'text-mode-hook #'flyspell-mode)
 (add-hook 'prog-mode-hook #'visual-line-mode)
 
 ;; cursor positons between sessions / other similar stuff
@@ -64,7 +65,7 @@
 ;; The arrow thing I enjoy
 (map! :nvi "<down>" #'evil-next-visual-line
       :nvi "<up>"   #'evil-previous-visual-line)
-(map! :nvi "C-l"  #'flyspell-auto-correct-previous-word)
+(map! :ni "C-l"  #'flyspell-auto-correct-previous-word)
 
 ;; Patching for gcc etc.
 (after! eglot
@@ -74,6 +75,60 @@
                  . ("clangd"
                     "--query-driver=/nix/store/*-clang-wrapper-*/bin/clang,
            /nix/store/*-gcc-wrapper-*/bin/gcc,/nix/store/*-gcc-wrapper-*/bin/g++"))))
+
+;; Typst: syntax coloring (tree-sitter), no LSP. typstyle handles
+;; (format +onsave) via apheleia.
+;; Live preview: `typst watch' runs in a compilation buffer (doom pops it
+;; up at the bottom, errors stay visible, `g' restarts it) and the pdf
+;; opens in a right split where auto-revert refreshes it on each rebuild.
+(use-package! typst-ts-mode
+  :mode "\\.typ\\'")
+
+(defun +typst--file (&optional file)
+  "FILE, or the current buffer's .typ file, or ask."
+  (or file
+      (and buffer-file-name (string-suffix-p ".typ" buffer-file-name)
+           buffer-file-name)
+      (read-file-name "Typst file: " nil nil t nil
+                      (lambda (f) (or (file-directory-p f)
+                                      (string-suffix-p ".typ" f))))))
+
+(defun +typst/watch (&optional file)
+  "Start (or restart) `typst watch' on FILE (default: current .typ file).
+Runs in the file's own directory, so imports relative to it resolve."
+  (interactive)
+  (let* ((file (+typst--file file))
+         (default-directory (file-name-directory file))
+         (buf-name (format "*typst watch: %s*" (file-name-nondirectory file)))
+         (compilation-buffer-name-function (lambda (_) buf-name)))
+    (when-let* ((buf (get-buffer buf-name)))
+      (when-let* ((proc (get-buffer-process buf)))
+        (delete-process proc))
+      (kill-buffer buf))
+    (compilation-start (format "typst watch %s" (shell-quote-argument file)))))
+
+(defun +typst/preview (&optional file)
+  "Run `+typst/watch' on FILE and open its pdf in a right-side split."
+  (interactive)
+  (let* ((file (+typst--file file))
+         (pdf (concat (file-name-sans-extension file) ".pdf")))
+    ;; one synchronous compile so the pdf exists right away
+    (unless (file-exists-p pdf)
+      (call-process "typst" nil nil nil "compile" file pdf))
+    (+typst/watch file)
+    (if (file-exists-p pdf)
+        (display-buffer (find-file-noselect pdf)
+                        '(display-buffer-in-side-window . ((side . right)
+                                                           (window-width . 0.5))))
+      (message "+typst: no pdf yet -- check the watch buffer for errors"))))
+
+(map! :leader
+      :desc "typst watch + pdf split" "o h" #'+typst/preview)
+(map! :after typst-ts-mode
+      :map typst-ts-mode-map
+      :localleader
+      :desc "typst watch"       "c" #'+typst/watch
+      :desc "pdf split preview" "r" #'+typst/preview)
 
 ;; Company config
 (after! company
@@ -87,7 +142,9 @@
 (after! projectile
   (setq projectile-enable-caching t)
   (setq projectile-switch-project-action #'projectile-dired))
-)
+;; pdf-tools
+(after! pdf-tools
+  (add-hook 'pdf-view-mode-hook #'auto-revert-mode))
 
 ;; Compilation stuff
 (setq compilation-scroll-output 'first-error)
