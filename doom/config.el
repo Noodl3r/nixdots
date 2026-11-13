@@ -1,18 +1,18 @@
-;; Font configuration
 (setq doom-font
-      (font-spec :family "JetBrainsMono Nerd Font Mono"
-                 :size 22
+      (font-spec :family "Iosevka Comfy"
+                 :size 24
                  :weight 'regular))
 
-;; (setq doom-font
-;;       (font-spec :family "TempleOS"
-;;                  :size 20))
-
+;; Fallback font for missing Unicode glyphs
+(set-fontset-font t 'unicode
+                  (font-spec :family "JetBrainsMono Nerd Font")
+                  nil 'append)
 
 ;; Setup stuff
 (require 'server)
 (unless (server-running-p)
   (server-start))
+
 
 
 ;; Potential themes : modus-vivendi, ir-black, haki
@@ -187,11 +187,9 @@ Runs in the file's own directory, so imports relative to it resolve."
 (setq forge-topic-list-limit '(30 . 6))
 
 
-;; Temple colors
-(after! temple-os-theme
-  (custom-theme-set-faces
-   'temple-os
-   '(eglot-semantic-property
-     ((t (:inherit font-lock-variable-name-face))))
-   '(font-lock-property-use-face
-     ((t (:inherit font-lock-variable-name-face))))))
+
+
+;; Fixing vterm stuff
+(after! vterm
+  (setq vterm-keymap-exceptions
+        '("C-c" "C-x" "C-u" "C-g" "C-l")))

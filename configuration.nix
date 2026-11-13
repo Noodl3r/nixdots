@@ -4,7 +4,8 @@
   pkgs,
   host,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware/${host}.nix
     ./modules/nvf.nix
@@ -55,7 +56,15 @@
   users.users.noodl3 = {
     isNormalUser = true;
     shell = pkgs.fish;
-    extraGroups = ["wheel" "networkmanager" "video" "audio" "input" "storage" "disk"];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "video"
+      "audio"
+      "input"
+      "storage"
+      "disk"
+    ];
     packages = with pkgs; [
       tree
     ];
@@ -102,6 +111,7 @@
   fonts.packages = with pkgs; [
     nerd-fonts.jetbrains-mono
     corefonts
+    iosevka-comfy.comfy
   ];
 
   hardware = {
@@ -116,7 +126,10 @@
   documentation.man.cache.enable = false;
 
   nix.settings = {
-    experimental-features = ["nix-command" "flakes"];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     auto-optimise-store = true;
     keep-outputs = true;
     keep-derivations = true;
