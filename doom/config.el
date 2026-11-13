@@ -4,6 +4,17 @@
                  :size 22
                  :weight 'regular))
 
+;; (setq doom-font
+;;       (font-spec :family "TempleOS"
+;;                  :size 20))
+
+
+;; Setup stuff
+(require 'server)
+(unless (server-running-p)
+  (server-start))
+
+
 ;; Potential themes : modus-vivendi, ir-black, haki
 (setq doom-theme 'temple-dark)
 
@@ -30,6 +41,12 @@
 ;; Turning off the highlighting of the line via fighting with
 (global-hl-line-mode -1)
 (setq hl-line-mode nil)
+(add-hook 'after-change-major-mode-hook
+          (lambda () (hl-line-mode -1)))
+(remove-hook 'doom-first-buffer-hook #'global-hl-line-mode)
+(remove-hook 'after-change-major-mode-hook
+             #'global-hl-line-mode-enable-in-buffer)
+
 
 ;; I like line wrapping :(
 (add-hook 'text-mode-hook #'visual-line-mode)
@@ -76,6 +93,14 @@
                  . ("clangd"
                     "--query-driver=/nix/store/*-clang-wrapper-*/bin/clang,
            /nix/store/*-gcc-wrapper-*/bin/gcc,/nix/store/*-gcc-wrapper-*/bin/g++"))))
+
+;; Patching for java stupidity
+(after! eglot
+  (add-to-list 'eglot-server-programs
+               '((java-mode java-ts-mode) . ("jdtls")))
+
+  (add-hook 'java-mode-hook #'eglot-ensure)
+  (add-hook 'java-ts-mode-hook #'eglot-ensure))
 
 ;; Typst: syntax coloring (tree-sitter), no LSP. typstyle handles
 ;; (format +onsave) via apheleia.
@@ -130,6 +155,9 @@ Runs in the file's own directory, so imports relative to it resolve."
       :localleader
       :desc "typst watch"       "c" #'+typst/watch
       :desc "pdf split preview" "r" #'+typst/preview)
+
+;; Lsp speed up thing
+(setq read-process-output-max (* 1024 1024))
 
 ;; Company config
 (after! company

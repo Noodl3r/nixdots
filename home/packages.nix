@@ -1,7 +1,6 @@
 { pkgs, ... }: {
   home.packages = with pkgs; [
     vim-full
-    helix
     curl
     wget
     xclip

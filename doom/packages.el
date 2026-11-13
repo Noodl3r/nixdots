@@ -9,7 +9,7 @@
 (package! temple-os-theme
   :recipe(:host github
           :repo "Noodl3r/temple-os-emacs-theme")
-  :pin "8cd1fe0c7dd1f95e6a4d1b1f387b53e766384094")
+  :pin "8c1aafc88c7203ae4b44620073289691d665baae")
 
 (package! leuven-theme
   :recipe(:host github

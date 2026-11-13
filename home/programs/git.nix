@@ -7,8 +7,10 @@
         email = "echelon.r6s@gmail.com";
       };
       init.defaultBranch = "main";
-      push = {autoSetupRemote = true;};
-      #pull = {rebase = false;};
+      push = {
+        autoSetupRemote = true;
+      };
+      pull.rebase = true;
     };
   };
 }
