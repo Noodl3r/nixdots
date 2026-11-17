@@ -1,12 +1,7 @@
 (setq doom-font
-      (font-spec :family "Iosevka Comfy"
+      (font-spec :family "JetBrainsMono Nerd Font"
                  :size 24
-                 :weight 'regular))
-
-;; Fallback font for missing Unicode glyphs
-(set-fontset-font t 'unicode
-                  (font-spec :family "JetBrainsMono Nerd Font")
-                  nil 'append)
+                 :weight 'medium))
 
 ;; Setup stuff
 (require 'server)
@@ -15,8 +10,9 @@
 
 
 
-;; Potential themes : modus-vivendi, ir-black, haki
-(setq doom-theme 'temple-dark)
+;; Potential themes : modus-vivendi, ir-black, haki, manoj-dark, vulkanite-aether, vulkanite-vantablack
+(setq doom-theme 'vulkanite-aether)
+
 
 (setq select-enable-clipboard t)
 (setq select-enable-primary t)
@@ -80,6 +76,8 @@
 (map! :leader
       "w x" #'delete-window
       "w d" nil)
+;; resizing
+(setq resize-mini-windows nil)
 ;; The arrow thing I enjoy
 (map! :nvi "<down>" #'evil-next-visual-line
       :nvi "<up>"   #'evil-previous-visual-line)
@@ -169,15 +167,34 @@ Runs in the file's own directory, so imports relative to it resolve."
 
 ;; Projectile
 (after! projectile
-  (setq projectile-enable-caching t)
-  (setq projectile-switch-project-action #'projectile-dired))
+  (setq projectile-enable-caching t
+        projectile-switch-project-action #'projectile-dired
+        projectile-project-root-files-bottom-up '(".git")
+        projectile-project-root-files nil
+        projectile-project-root-files-top-down-recurring nil
+        projectile-project-root-functions '(projectile-root-local projectile-root-bottom-up)
+        projectil-e-warn-on-prefixless-dirconfig-lines nil))
+
 ;; pdf-tools
 (after! pdf-tools
-  (add-hook 'pdf-view-mode-hook #'auto-revert-mode))
+  (add-hook 'pdf-view-mode-hook #'auto-revert-mode)
+  (add-hook 'pdf-view-mode-hook #'pdf-view-roll-minor-mode)
+  (map! :map pdf-view-mode-map
+        :n "J" #'pdf-view-next-page-command
+        :n "K" #'pdf-view-previous-page-command))
+(map! :map pdf-view-mode-map
+      "C-S-c" #'pdf-view-kill-ring-save)
 
 ;; Compilation stuff
 (setq compilation-scroll-output 'first-error)
 (setq compilation-ask-about-save nil)
+(defun +my/compile-project-root-a (orig-fn command &optional comint)
+  (let ((default-directory
+         (or (projectile-project-root)
+             default-directory)))
+    (funcall orig-fn command comint)))
+
+(advice-add 'compile :around #'+my/compile-project-root-a)
 
 ;; Getting emacs to just close
 (setq confirm-kill-emacs nil)

@@ -27,7 +27,7 @@ bindsym $mod+q kill
 bindsym $mod+w exec "firefox"
 bindsym $mod+Shift+Return exec i3lock -c 000000
 bindsym $mod+d exec "dmenu_run"
-bindsym $mod+e exec --no-startup-id emacsclient -c
+bindsym $mod+e exec --no-startup-id emacsclient -c -a ''
 
 
 # change focus
