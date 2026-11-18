@@ -19,7 +19,7 @@
 
 ;; Line numbers :
 (setq display-line-numbers-type 'relative)
-;; I hate the indacator at the bottom
+;; I hate the indicator at the bottom
 (setq-default indicate-empty-lines nil)
 
 ;; Whitespace :
