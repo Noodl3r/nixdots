@@ -1,7 +1,6 @@
 (setq doom-font
-      (font-spec :family "JetBrainsMono Nerd Font"
-                 :size 24
-                 :weight 'medium))
+      (font-spec :family "Iosevka Comfy" :size 24 :weight 'medium)
+      doom-symbol-font (font-spec :family "Symbols Nerd Font Mono" :size 24))
 
 ;; Setup stuff
 (require 'server)
@@ -9,8 +8,7 @@
   (server-start))
 
 
-
-;; Potential themes : modus-vivendi, ir-black, haki, manoj-dark, vulkanite-aether, vulkanite-vantablack
+;; Potential themes : modus-vivendi, ir-black, haki, manoj-dark, vulkanite-aether, vulkanite-vantablack, vulkanite wave,
 (setq doom-theme 'vulkanite-aether)
 
 
@@ -29,7 +27,9 @@
 ;; (global-whitespace-mode t) slow?
 
 ;; Removing stupid splash on start up:
-(remove-hook '+dashboard-functions #'+dashboard-widget-banner)
+;; (remove-hook '+dashboard-functions #'+dashboard-widget-banner)
+;; Maybe silly photo instead of removal...
+(setq fancy-splash-image (expand-file-name "logo.png" doom-private-dir))
 
 ;; Reloading changes from outside emacs.
 (global-auto-revert-mode 1)
@@ -72,6 +72,7 @@
 
 ;; The leader save I'm used to from vim
 (map! :leader "W" #'save-buffer)
+
 ;; Deleting windows
 (map! :leader
       "w x" #'delete-window
@@ -203,10 +204,22 @@ Runs in the file's own directory, so imports relative to it resolve."
 (setq magit-prefer-remote-upstream t)
 (setq forge-topic-list-limit '(30 . 6))
 
-
-
-
 ;; Fixing vterm stuff
 (after! vterm
   (setq vterm-keymap-exceptions
         '("C-c" "C-x" "C-u" "C-g" "C-l")))
+
+
+;; Mode line config
+(after! doom-modeline
+  (setq
+   doom-modeline-height 16
+   doom-modeline-vcs-icon t
+   doom-modeline-vcs-max-length 35
+   doom-modeline-modal nil
+   doom-modeline-buffer-encoding nil
+   doom-modeline-enable-buffer-position nil
+   doom-modeline-enable-word-count nil
+   doom-modeline-check t
+   doom-modeline-lsp t))
+(remove-hook 'doom-modeline-mode-hook #'size-indication-mode)

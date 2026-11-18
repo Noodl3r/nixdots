@@ -112,6 +112,7 @@
     nerd-fonts.jetbrains-mono
     corefonts
     iosevka-comfy.comfy
+    nerd-fonts.symbols-only
   ];
 
   hardware = {
